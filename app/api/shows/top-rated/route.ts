@@ -21,7 +21,7 @@ export async function GET() {
       }
   
       const data = await response.json();
-      const tvShow: TVShow[] = data.results; // Utilisez le type `Movie[]` pour les résultats
+      const tvShow: TVShow[] = data.results; 
 
       return new Response(JSON.stringify(tvShow), { status: 200 });
     } catch (error) {
