@@ -1,4 +1,5 @@
 'use client'
+import React  from 'react';
 import { useState, useEffect } from 'react';
 import { Movie } from '@/app/entities/Movie';
 import { Star } from 'lucide-react';
@@ -10,6 +11,7 @@ interface FilmCardProps {
   
 
 const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }:FilmCardProps) => {
+    
   const [isFavorite, setIsFavorite] = useState(false);
   const currentUser = localStorage.getItem('currentUser');
 
