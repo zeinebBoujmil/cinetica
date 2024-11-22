@@ -14,6 +14,7 @@ export default function Login() {
   const router = useRouter();
 
   const handleLogIn = async (event: React.FormEvent) => {
+    'use server'
     event.preventDefault();
   
     const result = await signIn("credentials", {
