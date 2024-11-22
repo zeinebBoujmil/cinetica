@@ -1,4 +1,4 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { users } from "@/app/Repository/users";
@@ -45,6 +45,7 @@ const authOptions = {
       return session;
     },
     redirect: async ({ url, baseUrl }) => {
+      console.log(url);
       return baseUrl; // Redirige vers la page principale
     },
   },

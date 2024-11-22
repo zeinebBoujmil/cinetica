@@ -59,13 +59,7 @@ const favorites = [
     icon: Film,
   },
 ];
-const logout = [
-  {
-    title: "Logout",
-    url: "/login", // Lien vers la page de login
-    icon: LogOut,  // Icône de déconnexion
-  },
-];
+
 
 export function AppSidebar() {
   return (
