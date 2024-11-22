@@ -1,6 +1,7 @@
 import { Movie } from "@/app/entities/Movie";
 export async function GET() {
-    const apiKey = process.env.TMDB_API_KEY;
+    const apiKey = 'b5ccd41c3520c090526c7effad1e0d05';
+
     const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1`;
   
 
@@ -13,6 +14,7 @@ export async function GET() {
   
       const data = await response.json();
       const movies: Movie[] = data.results;
+      console.error("dataaaaaaaaaa :", data);
 
       return new Response(JSON.stringify(movies), { status: 200 });
     } catch (error) {
