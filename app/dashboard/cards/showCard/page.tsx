@@ -1,4 +1,4 @@
-// components/MovieCard.tsx
+'use client'
 import React, { useEffect, useState } from 'react';
 import { TVShow } from '@/app/entities/TVShow';
 import { Star } from 'lucide-react';
