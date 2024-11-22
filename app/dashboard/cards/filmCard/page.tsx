@@ -1,3 +1,4 @@
+'use client'
 import { Movie } from '@/app/entities/Movie';
 import { Star } from 'lucide-react';
 import { useState, useEffect } from 'react';
