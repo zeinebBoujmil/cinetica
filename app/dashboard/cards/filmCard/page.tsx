@@ -1,13 +1,15 @@
 'use client'
+import { useState, useEffect } from 'react';
 import { Movie } from '@/app/entities/Movie';
 import { Star } from 'lucide-react';
-import { useState, useEffect } from 'react';
 
-// Interface pour les props du composant
 interface FilmCardProps {
-  movie: Movie;
-  onClick?: () => void;
-}
+    movie: Movie;
+    onClick?: () => void;
+  }
+  
+
+
 
 // Composant MovieCard
 const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }) => {
@@ -100,5 +102,4 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }) => {
   );
 };
 
-// Assurez-vous que vous exportez votre composant
 export default MovieCard;
