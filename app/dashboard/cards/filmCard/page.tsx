@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 // Interface pour les props du composant
 interface FilmCardProps {
   movie: Movie;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 // Composant MovieCard
