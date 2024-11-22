@@ -1,8 +1,9 @@
 import { Movie } from '@/app/entities/Movie';
 import { Star } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 // Interface pour les props du composant
-export interface FilmCardProps {
+interface FilmCardProps {
   movie: Movie;
   onClick: () => void;
 }
