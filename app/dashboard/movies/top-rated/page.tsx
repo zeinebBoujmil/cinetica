@@ -2,7 +2,7 @@
 import { Movie } from "@/app/entities/Movie";
 import Loading from "@/app/Loading";
 import { useState, useEffect } from "react";
-import MovieCard from "../../cards/filmCard/page";
+import MovieCard from "../../cards/filmCard";
 import { useSearch } from "../../contexts/searchContext";
 import ModalFilm from "../../Modals/modalFilm";
 

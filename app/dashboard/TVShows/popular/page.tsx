@@ -2,7 +2,7 @@
 import { TVShow } from "@/app/entities/TVShow";
 import Loading from "@/app/Loading";
 import { useState, useEffect } from "react";
-import ShowCard from "../../cards/showCard/page";
+import ShowCard from "../../cards/showCard";
 import { useSearch } from "../../contexts/searchContext";
 import ModalSerie from "../../Modals/modalShow";
 import { Movie } from "@/app/entities/Movie";
