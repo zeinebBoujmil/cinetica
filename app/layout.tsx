@@ -4,7 +4,7 @@ import './globals.css';
 import Head from 'next/head';
 import { ThemeProvider } from '@/components/theme-provider';
 import { SessionProvider } from 'next-auth/react';
-import { Session } from 'next-auth'; // Import de Session
+import { Session } from 'next-auth';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -18,13 +18,14 @@ const geistMono = localFont({
   weight: '100 900',
 });
 
-// Interface des props
-interface RootLayoutProps {
+// RootLayoutProps peuvent être inclus directement dans le composant sans créer un type externe.
+export default function RootLayout({
+  children,
+  session,
+}: {
   children: React.ReactNode;
-  session?: Session; // Utilisation du type Session de next-auth
-}
-
-export default function RootLayout({ children, session }: RootLayoutProps) {
+  session?: Session; // Utilisez 'any' pour éviter des erreurs liées à la session
+}) {
   return (
     <html lang="en" className="overflow-x-hidden">
       <Head>
