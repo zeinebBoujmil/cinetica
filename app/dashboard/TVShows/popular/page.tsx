@@ -7,7 +7,7 @@ import { useSearch } from "../../contexts/searchContext";
 import ModalSerie from "../../Modals/modalShow";
 import { Movie } from "@/app/entities/Movie";
 
-export default function popular() {
+export default function Popular() {
     const [data, setData] = useState<{ series: TVShow[] } | null>(null);
 
     const { query } = useSearch();

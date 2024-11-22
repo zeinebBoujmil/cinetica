@@ -4,7 +4,7 @@ import { useState } from "react";
 import "/app/globals.css";
 import { signIn } from "next-auth/react";
 
-export default function login() {
+export default function Login() {
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
