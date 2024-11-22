@@ -1,23 +1,24 @@
-'use client'
-import localFont from "next/font/local";
-import "./globals.css";
-import Head from "next/head";
-import { ThemeProvider } from "@/components/theme-provider";
-import { SessionProvider } from "next-auth/react"; // Import de Session
-import { Session } from "next-auth";
+'use client';
+import localFont from 'next/font/local';
+import './globals.css';
+import Head from 'next/head';
+import { ThemeProvider } from '@/components/theme-provider';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth'; // Import de Session
 
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+  src: './fonts/GeistVF.woff',
+  variable: '--font-geist-sans',
+  weight: '100 900',
 });
 
-// Définir le type de session
+const geistMono = localFont({
+  src: './fonts/GeistMonoVF.woff',
+  variable: '--font-geist-mono',
+  weight: '100 900',
+});
+
+// Interface des props
 interface RootLayoutProps {
   children: React.ReactNode;
   session?: Session; // Utilisation du type Session de next-auth
