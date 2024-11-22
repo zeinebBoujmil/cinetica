@@ -9,10 +9,7 @@ interface FilmCardProps {
   }
   
 
-
-
-// Composant MovieCard
-const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }) => {
+const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }:FilmCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const currentUser = localStorage.getItem('currentUser');
 
