@@ -1,6 +1,5 @@
 'use client'
-import React  from 'react';
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Movie } from '@/app/entities/Movie';
 import { Star } from 'lucide-react';
 
