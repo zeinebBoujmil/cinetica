@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { TVShow } from '@/app/entities/TVShow';
 import { Star } from 'lucide-react';
-interface MovieCardProps {
+interface ShowCardProps {
     serie: TVShow;
     onClick?: () => void; // Optionnel : pour gérer un clic sur la carte
 }
 
-const ShowCard: React.FC<MovieCardProps> = ({ serie, onClick }) => {
+const ShowCard: React.FC<ShowCardProps> = ({ serie, onClick }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     //console.log("Film reçu dans MovieCard :", serie); // Ajout de console.log pour vérifier les données du film
     const currentUser = localStorage.getItem('currentUser'); // Récupérer l'utilisateur connecté
