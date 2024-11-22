@@ -23,7 +23,7 @@ interface RootLayoutProps {
   session?: Session; // Utilisation du type Session de next-auth
 }
 
-const RootLayout = ({ children, session }: RootLayoutProps) => {
+export default function RootLayout({ children, session }: RootLayoutProps) {
   return (
     <html lang="en" className="overflow-x-hidden">
       <Head>
@@ -44,6 +44,4 @@ const RootLayout = ({ children, session }: RootLayoutProps) => {
       </body>
     </html>
   );
-};
-
-export default RootLayout; 
+}
