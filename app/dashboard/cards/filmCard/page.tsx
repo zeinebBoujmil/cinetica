@@ -11,39 +11,9 @@ interface FilmCardProps {
 
 const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }:FilmCardProps) => {
     
-  const [isFavorite, setIsFavorite] = useState(false);
-  const currentUser = localStorage.getItem('currentUser');
 
-  useEffect(() => {
-    if (!currentUser) {
-      console.error("Aucun utilisateur connecté.");
-      return;
-    }
 
-    const favoritesKey = `favorites_${currentUser}`;
-    const favorites = JSON.parse(localStorage.getItem(favoritesKey) || '[]');
-    setIsFavorite(favorites.some((fav: Movie) => fav.id === movie.id));
-  }, [movie.id, currentUser]);
 
-  const toggleFavorite = () => {
-    if (!currentUser) {
-      console.error("Aucun utilisateur connecté.");
-      return;
-    }
-
-    const favoritesKey = `favorites_${currentUser}`;
-    const favorites = JSON.parse(localStorage.getItem(favoritesKey) || '[]');
-
-    if (isFavorite) {
-      const updatedFavorites = favorites.filter((fav: Movie) => fav.id !== movie.id);
-      localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites));
-      setIsFavorite(false);
-    } else {
-      favorites.push(movie);
-      localStorage.setItem(favoritesKey, JSON.stringify(favorites));
-      setIsFavorite(true);
-    }
-  };
 
   return (
     <div
@@ -88,11 +58,8 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }:FilmCardProps) =>
       </div>
 
       <button
-        onClick={(e) => {
-          e.stopPropagation(); // Empêche le clic sur l'étoile de déclencher `onClick`
-          toggleFavorite();
-        }}
-        className={`text-lg self-end p-2 ${isFavorite ? 'text-yellow-400' : 'text-gray-400'}`}
+
+        className={`text-lg self-end p-2`}
       >
         <Star />
       </button>
