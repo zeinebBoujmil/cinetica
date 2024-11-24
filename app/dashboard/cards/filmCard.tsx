@@ -1,18 +1,44 @@
-'use client'
+'use client';
+import React, { useEffect, useState } from 'react';
 import { Movie } from '@/app/entities/Movie';
 import { Star } from 'lucide-react';
 
 interface FilmCardProps {
-    movie: Movie;
-    onClick?: () => void;
-  }
-  
+  movie: Movie;
+  onClick?: () => void; // Optionnel : pour gérer un clic sur la carte
+}
 
-const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }:FilmCardProps) => {
+const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const currentUser = localStorage.getItem('currentUser'); // Récupérer l'utilisateur connecté
+
+  useEffect(() => {
+    // Vérifie si le film est déjà dans les favoris
+    const favorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');
+    setIsFavorite(favorites.some((fav: Movie) => fav.id === movie.id));
+  }, [movie.id, currentUser]);
+
+  const toggleFavorite = () => {
+    if (!currentUser) {
+      console.error("Aucun utilisateur connecté.");
+      return;
+    }
+
+    const favoritesKey = `favorites_${currentUser}`;
+    const favorites = JSON.parse(localStorage.getItem(favoritesKey) || '[]');
     
-
-
-
+    if (isFavorite) {
+      // Supprime le film des favoris
+      const updatedFavorites = favorites.filter((fav: Movie) => fav.id !== movie.id);
+      localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites));
+      setIsFavorite(false);
+    } else {
+      // Ajoute le film aux favoris
+      favorites.push(movie);
+      localStorage.setItem(favoritesKey, JSON.stringify(favorites));
+      setIsFavorite(true);
+    }
+  };
 
   return (
     <div
@@ -57,8 +83,11 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }:FilmCardProps) =>
       </div>
 
       <button
-
-        className={`text-lg self-end p-2`}
+        onClick={(e) => {
+          e.stopPropagation(); // Empêche le clic sur l'étoile de déclencher `onClick`
+          toggleFavorite();
+        }}
+        className={`text-lg self-end p-2 ${isFavorite ? 'text-yellow-400' : 'text-gray-400'}`}
       >
         <Star />
       </button>

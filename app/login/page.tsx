@@ -1,36 +1,62 @@
-'use client'
+'use client';
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
 import "/app/globals.css";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Login() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [welcomeMessage, setWelcomeMessage] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  
+  const { data: session, status } = useSession(); // Utilisation de useSession pour récupérer la session
   const router = useRouter();
 
   const handleLogIn = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    // Tentative de connexion via les credentials
+    
     const result = await signIn("credentials", {
       redirect: false, // Empêche la redirection automatique
       username: userName,
       password: password,
     });
-
-    // Vérifier si la connexion a échoué
+    
+    console.log("Result from signIn:", result); // Logue le résultat pour le debug
+    
     if (result?.error) {
-      setErrMsg(result.error); 
+      // Affiche l'erreur si la connexion échoue
+      console.error("Erreur de connexion:", result.error);
+      setErrMsg(result.error);
       setTimeout(() => {
         setErrMsg(""); 
-      }, 3000);
+      }, 3000); 
     } else {
-      // Connexion réussie, rediriger vers la page /dashboard/discover
-      router.push("/dashboard/discover"); // Redirection immédiate
+      // Enregistrer dans localStorage si la connexion réussit
+      localStorage.setItem('currentUser', userName); // Sauvegarde dans localStorage
+      setTimeout(() => {
+        // Vérifier que la session est disponible avant la redirection
+        if (status === 'authenticated') {
+          console.log("Session is authenticated. Redirecting...");
+          router.push("/dashboard/discover"); // Redirige si la session est authentifiée
+        } else {
+          console.error("Erreur lors de la récupération de l'utilisateur.");
+          setErrMsg("Erreur lors de la récupération de l'utilisateur.");
+        }
+      }, 2000);
     }
   };
+
+  const goToSignUp = () => {
+    router.push("/signup");
+  };
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      setWelcomeMessage(`Welcome, ${userName}!`);
+      router.push("/dashboard/discover"); // Si l'utilisateur est déjà connecté, redirige vers le tableau de bord
+    }
+  }, [status]); // Déclencher ce useEffect uniquement lorsque le statut de la session change
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gray-800">
@@ -92,18 +118,27 @@ export default function Login() {
         </form>
 
         <button
-          onClick={() => router.push("/signup")}
-          className="mt-4 w-full bg-white text-[#0A2540] py-2 rounded-lg font-semibold hover:bg-[#0A2540] hover:text-white transition duration-200"
+          onClick={goToSignUp}
+          className="mt-4 w-full bg-white text-[#0A2540]  py-2 rounded-lg font-semibold hover:bg-[#0A2540] hover:text-white transition duration-200"
         >
           Sign Up
         </button>
+
       </div>
 
       {errMsg && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-3xl font-bold mb-4">{errMsg}</h2>
-            <p>Nom d utilisateur ou mot de passe incorrect</p>
+            <p>Nom d'utilisateur ou mot de passe incorrect</p>
+          </div>
+        </div>
+      )}
+      {welcomeMessage && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
+            <h2 className="text-3xl font-bold mb-4">{welcomeMessage}</h2>
+            <p>Redirection vers votre page d'accueil Cinetica ...</p>
           </div>
         </div>
       )}
