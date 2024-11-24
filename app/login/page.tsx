@@ -23,7 +23,7 @@ export default function Login() {
     });
     
     console.log("Result from signIn:", result); // Logue le résultat pour le debug
-    
+    console.log(session);
     if (result?.error) {
       // Affiche l'erreur si la connexion échoue
       console.error("Erreur de connexion:", result.error);
@@ -40,8 +40,8 @@ export default function Login() {
           console.log("Session is authenticated. Redirecting...");
           router.push("/dashboard/discover"); // Redirige si la session est authentifiée
         } else {
-          console.error("Erreur lors de la récupération de l'utilisateur.");
-          setErrMsg("Erreur lors de la récupération de l'utilisateur.");
+          console.error("Erreur lors de la récupération de l utilisateur.");
+          setErrMsg("Erreur lors de la récupération de l utilisateur.");
         }
       }, 2000);
     }
@@ -130,7 +130,7 @@ export default function Login() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-3xl font-bold mb-4">{errMsg}</h2>
-            <p>Nom d'utilisateur ou mot de passe incorrect</p>
+            <p>Nom d utilisateur ou mot de passe incorrect</p>
           </div>
         </div>
       )}
@@ -138,7 +138,7 @@ export default function Login() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-3xl font-bold mb-4">{welcomeMessage}</h2>
-            <p>Redirection vers votre page d'accueil Cinetica ...</p>
+            <p>Redirection vers votre page d accueil Cinetica ...</p>
           </div>
         </div>
       )}
