@@ -50,12 +50,12 @@ const tvShows = [
 const favorites = [
   {
     title: "Favorite Movies",
-    url: "#",
+    url: "/dashboard/Favorites/FavoriteMovies",
     icon: Film,
   },
   {
     title: "Favorite Shows",
-    url: "#",
+    url: "/dashboard/Favorites/FavoriteShows",
     icon: Film,
   },
 ];
