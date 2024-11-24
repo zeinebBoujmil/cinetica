@@ -13,7 +13,6 @@ const FavoritesFilms: React.FC<FavoritesFilmsProps> = ({ onMovieClick }) => {
     const currentUser = localStorage.getItem('currentUser'); // Récupérer l'utilisateur connecté
     const { query } = useSearch();
 
-
     useEffect(() => {
         if (!currentUser) {
             console.error("Aucun utilisateur connecté.");
@@ -58,4 +57,4 @@ const FavoritesFilms: React.FC<FavoritesFilmsProps> = ({ onMovieClick }) => {
     );
 };
 
-export default FavoritesFilms;
+export default FavoritesFilms; // Assurez-vous que c'est bien exporté
