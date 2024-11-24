@@ -1,29 +1,27 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Movie } from '@/app/entities/Movie';
 import { useSearch } from '../../contexts/searchContext';
 import MovieCard from '../../cards/filmCard';
 
-interface FFProps {
-    onMovieClick: (movie: Movie) => void;
-}
-
-const FavoritesFilms: React.FC<FFProps> = ({ onMovieClick }) => {
+const FavoritesFilms = ({ onMovieClick }: { onMovieClick: (movie: Movie) => void }) => {
     const [favorites, setFavorites] = useState<Movie[]>([]);
-    const currentUser = localStorage.getItem('currentUser'); // Récupérer l'utilisateur connecté
+    const [currentUser, setCurrentUser] = useState<string | null>(null);
     const { query } = useSearch();
 
+    // Effet pour récupérer l'utilisateur courant
     useEffect(() => {
-        if (!currentUser) {
-            console.error("Aucun utilisateur connecté.");
-            return;
-        }
+        const user = localStorage.getItem('currentUser');
+        setCurrentUser(user);
+    }, []);
 
-        // Récupérer les favoris de l'utilisateur actuel depuis localStorage
+    // Effet pour gérer les favoris
+    useEffect(() => {
+        if (!currentUser) return;
+
         const storedFavorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');
 
         if (query) {
-            // Filtrer les favoris en fonction de la requête de recherche
             const filteredFavorites = storedFavorites.filter((movie: Movie) =>
                 movie.title.toLowerCase().includes(query.toLowerCase())
             );
@@ -33,6 +31,15 @@ const FavoritesFilms: React.FC<FFProps> = ({ onMovieClick }) => {
         }
     }, [query, currentUser]);
 
+    // Rendu conditionnel si pas d'utilisateur
+    if (!currentUser) {
+        return (
+            <div className="flex justify-center items-center h-64">
+                <p className="text-lg text-gray-400">Veuillez vous connecter pour voir vos favoris.</p>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen text-gray-700 py-8 px-6">
             <h2 className="text-4xl font-bold mb-6 text-center">Vos Films Favoris</h2>
@@ -40,12 +47,11 @@ const FavoritesFilms: React.FC<FFProps> = ({ onMovieClick }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                     {favorites.map((movie) => (
                         <div key={movie.id} className="flex justify-center">
-                            <MovieCard movie={movie} onClick={() => {
-                                onMovieClick(movie);
-                            }}
+                            <MovieCard 
+                                movie={movie} 
+                                onClick={() => onMovieClick(movie)}
                             />
                         </div>
-
                     ))}
                 </div>
             ) : (
@@ -57,4 +63,4 @@ const FavoritesFilms: React.FC<FFProps> = ({ onMovieClick }) => {
     );
 };
 
-export default FavoritesFilms; // Assurez-vous que c'est bien exporté
+export default FavoritesFilms;
