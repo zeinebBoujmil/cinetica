@@ -12,11 +12,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <main>
+
     <SearchProvider>
       <SidebarProvider>
         <Navbar />
         <AppSidebar />
-        <main>
           <SidebarTrigger />
           <ThemeProvider
             attribute="class"
@@ -28,8 +29,9 @@ export default function RootLayout({
               {children}
             </div>
           </ThemeProvider>
-        </main>
       </SidebarProvider>
     </SearchProvider>
+    </main>
+
   );
 }

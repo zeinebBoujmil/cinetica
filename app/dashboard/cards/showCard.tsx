@@ -44,16 +44,16 @@ const ShowCard: React.FC<ShowCardProps> = ({ serie, onClick }) => {
     return (
         <>
             <div
-                className=" hover:scale-105 transition-transform duration-300 hover:shadow-lg hover:shadow-gray-500/50 rounded-lg overflow-hidden w-64 h-66 mx-auto flex flex-col"
-                onClick={onClick}
+      className="hover:scale-105 transition-transform duration-300 hover:shadow-lg hover:shadow-gray-500/50 rounded-lg overflow-hidden w-64 h-96 mx-auto flex flex-col"
+      onClick={onClick}
             >
                 <img
                     src={`https://image.tmdb.org/t/p/w300${serie.poster_path}`}
                     alt={serie.name}
-                    className="w-full h-48 object-cover"
-                />
-                <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-800">{serie.name}</h3>
+                    className="w-full h-2/3 object-cover"
+                    />
+      <div className="p-4 flex-1 flex flex-col justify-between">
+      <h3 className="text-lg font-semibold text-gray-800">{serie.name}</h3>
                     <div className="flex items-center justify-between">
                         <p className="text-sm text-gray-600">
                             {serie.first_air_date
@@ -61,10 +61,7 @@ const ShowCard: React.FC<ShowCardProps> = ({ serie, onClick }) => {
                                 : 'Inconnue'}
                         </p>
                         <div className="relative flex items-center justify-center w-8 h-8 ml-2">
-                            {/* Cercle de base */}
                             <div className="absolute w-full h-full rounded-full border-2 border-gray-300"></div>
-
-                            {/* Cercle de progression */}
                             <div
                                 className="absolute w-full h-full rounded-full border-2"
                                 style={{

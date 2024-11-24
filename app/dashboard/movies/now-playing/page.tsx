@@ -64,7 +64,10 @@ export default function NowPlaying() {
                     <Loading />
                 ) : (
                     <>
-                        <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Now Playing Films</h1>
+                       <h1 className="text-3xl font-extrabold mb-6 text-center relative">
+                          Now Playing Films
+                          <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
+                          </h1>
                         <div className="flex flex-wrap justify-center gap-2">
                             {data?.films?.map((movie) => (
                                 <MovieCard key={movie.id}
