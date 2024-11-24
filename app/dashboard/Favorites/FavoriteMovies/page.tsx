@@ -4,11 +4,11 @@ import { Movie } from '@/app/entities/Movie';
 import { useSearch } from '../../contexts/searchContext';
 import MovieCard from '../../cards/filmCard';
 
-interface FavoritesFilmsProps {
+interface FFProps {
     onMovieClick: (movie: Movie) => void;
 }
 
-const FavoritesFilms: React.FC<FavoritesFilmsProps> = ({ onMovieClick }) => {
+const FavoritesFilms: React.FC<FFProps> = ({ onMovieClick }) => {
     const [favorites, setFavorites] = useState<Movie[]>([]);
     const currentUser = localStorage.getItem('currentUser'); // Récupérer l'utilisateur connecté
     const { query } = useSearch();
