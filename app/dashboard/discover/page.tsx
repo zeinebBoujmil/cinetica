@@ -68,70 +68,88 @@ export default function Discover() {
         setIsModalOpen(false);
     };
 
-    return (
-        <div
-            className="flex flex-col container mx-auto px-4 py-4 sm:pr-0"
-        >
-            {data === null ? (
-                <Loading />
-            ) : (
-                <div
-                className={`relative flex flex-col px-4 py-4  overflow-x-hidden`} // Empêche les débordements horizontaux
-                style={{
-                    width: state === "expanded" ? "calc(100vw - 16rem)" : "100vw", // Ajuste la largeur en fonction de la sidebar
+     return (
+      <div className="flex flex-col container mx-auto px-4 py-4 ">
+          {data === null ? (
+              <Loading />
+          ) : (
+              <div
+                  className="relative flex flex-col px-4 py-4"
+                  style={{
+                      width: state === "expanded" ? "calc(100vw - 16rem)" : "100vw",
                   }}
               >
-                {/* Section Films */}
-                <div className="mt-8">
-                  <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Films</h1>
-                  <div
-                    className="flex overflow-x-auto gap-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
-                  >
-                    {data.films.map((movie) => (
-                      <div key={movie.id} className="flex-shrink-0 w-64">
-                        <MovieCard
-                          movie={movie}
-                          onClick={() => openModal(movie, "movie")}
-                        />
+                  {/* Section Films */}
+                  <div className="mb-12 overflow-hidden px-4 ">
+                      <h1 className="text-3xl font-extrabold mb-6 text-center relative">
+                          Films
+                          <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
+                      </h1>
+                      <div className="overflow-x-auto px-4">
+                          <div 
+                              className="flex gap-4 pb-4 
+                                       scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200
+                                       snap-x snap-mandatory"
+                          >
+                              {data.films.map((movie) => (
+                                  <div 
+                                      key={movie.id} 
+                                      className="flex-shrink-0 w-64 transform transition-transform duration-300 
+                                                snap-start p-2"
+                                  >
+                                      <MovieCard
+                                          movie={movie}
+                                          onClick={() => openModal(movie, "movie")}
+                                      />
+                                  </div>
+                              ))}
+                          </div>
                       </div>
-                    ))}
                   </div>
-                </div>
-              
-                {/* Section Séries */}
-                <div className="mt-8">
-                  <h1 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">Séries</h1>
-                  <div
-                    className="flex overflow-x-auto gap-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
-                  >
-                    {data.series.map((serie) => (
-                      <div key={serie.id} className="flex-shrink-0 w-64">
-                        <ShowCard
-                          serie={serie}
-                          onClick={() => openModal(serie, "serie")}
-                        />
+  
+                  {/* Section Séries */}
+                  <div className="mb-12 overflow-hidden px-4">
+                      <h1 className="text-3xl font-extrabold mb-6 text-center relative">
+                          Séries
+                          <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
+                      </h1>
+                      <div className="overflow-x-auto -mx-4 px-4">
+                          <div 
+                              className="flex gap-4 pb-4 
+                                       scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200
+                                       snap-x snap-mandatory"
+                          >
+                              {data.series.map((serie) => (
+                                  <div 
+                                      key={serie.id} 
+                                      className="flex-shrink-0 w-64 transform transition-transform duration-300 
+                                               snap-start p-2"
+                                  >
+                                      <ShowCard
+                                          serie={serie}
+                                          onClick={() => openModal(serie, "serie")}
+                                      />
+                                  </div>
+                              ))}
+                          </div>
                       </div>
-                    ))}
                   </div>
-                </div>
-              
-                {/* Modals */}
-                <ModalFilm
-                  isOpen={isModalOpen && isMovie}
-                  onClose={closeModal}
-                  item={selectedItem as Movie}
-                  isMovie={true}
-                />
-                <ModalSerie
-                  isOpen={isModalOpen && !isMovie}
-                  onClose={closeModal}
-                  serie={selectedItem as TVShow}
-                  isMovie={false}
-                />
+  
+                  {/* Modals */}
+                  <ModalFilm
+                      isOpen={isModalOpen && isMovie}
+                      onClose={closeModal}
+                      item={selectedItem as Movie}
+                      isMovie={true}
+                  />
+                  <ModalSerie
+                      isOpen={isModalOpen && !isMovie}
+                      onClose={closeModal}
+                      serie={selectedItem as TVShow}
+                      isMovie={false}
+                  />
               </div>
-              
-
-            )}
-        </div>
-    );
+          )}
+      </div>
+  );
 }
