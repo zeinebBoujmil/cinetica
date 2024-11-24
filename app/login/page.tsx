@@ -1,43 +1,35 @@
 'use client'
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import "/app/globals.css";
 import { signIn } from "next-auth/react";
+import "/app/globals.css";
 
 export default function Login() {
-
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [welcomeMessage, setWelcomeMessage] = useState("");
   const [errMsg, setErrMsg] = useState("");
-
   const router = useRouter();
 
   const handleLogIn = async (event: React.FormEvent) => {
     event.preventDefault();
-  
+
+    // Tentative de connexion via les credentials
     const result = await signIn("credentials", {
       redirect: false, // Empêche la redirection automatique
       username: userName,
       password: password,
     });
-  
-    if (result?.error) {
-        setErrMsg(result.error); // Affiche l'erreur si la connexion échoue
-        setTimeout(() => {
-          setErrMsg(""); 
-        }, 3000); 
-      } else {
-      setWelcomeMessage(`Welcome, ${userName}!`);
-      setTimeout(() => {
-        router.push("/dashboard/discover");
-      }, 2000);
-    }
-  ;}
-  
 
-  const goToSignUp = () => {
-    router.push("/signup");
+    // Vérifier si la connexion a échoué
+    if (result?.error) {
+      setErrMsg(result.error); // Affiche l'erreur si la connexion échoue
+      setTimeout(() => {
+        setErrMsg(""); 
+      }, 3000);
+    } else {
+      // Connexion réussie, rediriger vers la page /dashboard/discover
+      router.push("/dashboard/discover"); // Redirection immédiate
+    }
   };
 
   return (
@@ -100,27 +92,18 @@ export default function Login() {
         </form>
 
         <button
-          onClick={goToSignUp}
-          className="mt-4 w-full bg-white text-[#0A2540]  py-2 rounded-lg font-semibold hover:bg-[#0A2540] hover:text-white transition duration-200"
+          onClick={() => router.push("/signup")}
+          className="mt-4 w-full bg-white text-[#0A2540] py-2 rounded-lg font-semibold hover:bg-[#0A2540] hover:text-white transition duration-200"
         >
           Sign Up
         </button>
-
       </div>
 
       {errMsg && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-3xl font-bold mb-4">{errMsg}</h2>
-            <p>nom d utilisateur ou mdp incorrect </p>
-          </div>
-        </div>
-      )}
-      {welcomeMessage && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
-            <h2 className="text-3xl font-bold mb-4">{welcomeMessage}</h2>
-            <p>Redirection vers votre page d accueil Cinetica ...</p>
+            <p>Nom d'utilisateur ou mot de passe incorrect</p>
           </div>
         </div>
       )}
