@@ -1,9 +1,10 @@
+// app/layout.tsx
 'use client';
 import localFont from 'next/font/local';
 import './globals.css';
-import Head from 'next/head';
 import { ThemeProvider } from '@/components/theme-provider';
 import { SessionProvider } from 'next-auth/react';
+import { metadata } from './metadata'; // Importer les métadonnées depuis le fichier server
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -17,13 +18,13 @@ const geistMono = localFont({
   weight: '100 900',
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) { 
   return (
     <html lang="en" className="overflow-x-hidden">
-      <Head>
-        <title>My Awesome App</title>  {/* Changez ce titre en un plus pertinent */}
-        <meta name="description" content="This is an awesome app built with Next.js" />  {/* Décrivez brièvement votre application */}
-      </Head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <SessionProvider>
           <ThemeProvider
