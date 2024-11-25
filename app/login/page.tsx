@@ -1,62 +1,49 @@
 'use client';
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import "/app/globals.css";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react"; // Utilisation de NextAuth pour l'authentification
+import "/app/globals.css"; // Si nécessaire
 
 export default function Login() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [welcomeMessage, setWelcomeMessage] = useState("");
   const [errMsg, setErrMsg] = useState("");
   
-  const { data: session, status } = useSession(); // Utilisation de useSession pour récupérer la session
+  const { data: session, status } = useSession(); // Gestion de la session avec NextAuth
   const router = useRouter();
 
+  // Redirection vers la page d'accueil si l'utilisateur est déjà connecté
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push("/dashboard/discover");
+    }
+  }, [status, router]);
+
+  // Fonction de gestion du login
   const handleLogIn = async (event: React.FormEvent) => {
     event.preventDefault();
     
+    // Connexion via NextAuth
     const result = await signIn("credentials", {
-      redirect: false, // Empêche la redirection automatique
+      redirect: false, // Empêcher la redirection automatique
       username: userName,
       password: password,
     });
-    
-    console.log("Result from signIn:", result); // Logue le résultat pour le debug
-    console.log(session);
+
+    // Vérification du résultat de la connexion
     if (result?.error) {
-      // Affiche l'erreur si la connexion échoue
-      console.error("Erreur de connexion:", result.error);
-      setErrMsg(result.error);
-      setTimeout(() => {
-        setErrMsg(""); 
-      }, 3000); 
+      setErrMsg(result.error); // Affichage de l'erreur de connexion
+      setTimeout(() => setErrMsg(""), 3000); // Masquage du message d'erreur après 3 secondes
     } else {
-      // Enregistrer dans localStorage si la connexion réussit
-      localStorage.setItem('currentUser', userName); // Sauvegarde dans localStorage
-      setTimeout(() => {
-        // Vérifier que la session est disponible avant la redirection
-        if (status === 'authenticated') {
-          console.log("Session is authenticated. Redirecting...");
-          router.push("/dashboard/discover"); // Redirige si la session est authentifiée
-        } else {
-          console.error("Erreur lors de la récupération de l utilisateur.");
-          setErrMsg("Erreur lors de la récupération de l utilisateur.");
-        }
-      }, 2000);
+      localStorage.setItem('currentUser', userName); // Sauvegarde du nom d'utilisateur dans localStorage
+      router.push("/dashboard/discover"); // Redirection vers la page d'accueil une fois connecté
     }
   };
 
+  // Fonction pour rediriger vers la page d'inscription
   const goToSignUp = () => {
     router.push("/signup");
   };
-
-  useEffect(() => {
-    if (status === 'authenticated') {
-      setWelcomeMessage(`Welcome, ${userName}!`);
-      router.push("/dashboard/discover"); // Si l'utilisateur est déjà connecté, redirige vers le tableau de bord
-    }
-  }, [status]); // Déclencher ce useEffect uniquement lorsque le statut de la session change
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gray-800">
@@ -119,26 +106,19 @@ export default function Login() {
 
         <button
           onClick={goToSignUp}
-          className="mt-4 w-full bg-white text-[#0A2540]  py-2 rounded-lg font-semibold hover:bg-[#0A2540] hover:text-white transition duration-200"
+          className="mt-4 w-full bg-white text-[#0A2540] py-2 rounded-lg font-semibold hover:bg-[#0A2540] hover:text-white transition duration-200"
         >
           Sign Up
         </button>
 
       </div>
 
+      {/* Affichage du message d'erreur ou de bienvenue */}
       {errMsg && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-3xl font-bold mb-4">{errMsg}</h2>
             <p>Nom d utilisateur ou mot de passe incorrect</p>
-          </div>
-        </div>
-      )}
-      {welcomeMessage && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
-            <h2 className="text-3xl font-bold mb-4">{welcomeMessage}</h2>
-            <p>Redirection vers votre page d accueil Cinetica ...</p>
           </div>
         </div>
       )}
