@@ -40,6 +40,10 @@ export default function Login() {
     }
   };
 
+  // Fonction pour rediriger vers la page d'inscription
+  const goToSignUp = () => {
+    router.push("/signup");
+  };
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gray-800">
@@ -101,6 +105,7 @@ export default function Login() {
         </form>
 
         <button
+          onClick={goToSignUp}
           className="mt-4 w-full bg-white text-[#0A2540] py-2 rounded-lg font-semibold hover:bg-[#0A2540] hover:text-white transition duration-200"
         >
           Sign Up
