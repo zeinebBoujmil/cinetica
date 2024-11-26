@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-const protectedRoutes = ["/dashboard","/dashboard/discover","/dashboard/movies/popular","/dashboard/movies/now-playing","/dashboard/movies/top-rated","/dashboard/TVShows/popular","/dashboard/TVShows/top-rated","/dashboard/TVShows/on-the-air"];
+const protectedRoutes = ["/dashboard/movies/popular","/dashboard/movies/now-playing","/dashboard/movies/top-rated","/dashboard/TVShows/popular","/dashboard/TVShows/top-rated","/dashboard/TVShows/on-the-air"];
 
 export async function middleware(req: NextRequest) { 
   const url = req.nextUrl.clone(); 
