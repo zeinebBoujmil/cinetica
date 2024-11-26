@@ -28,7 +28,7 @@ const authOptions = {
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: "/dashboard/discover",
   },
   session: {
     strategy: "jwt",
