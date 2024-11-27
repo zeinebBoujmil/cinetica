@@ -39,6 +39,7 @@ export default function Login() {
       setTimeout(() => setErrMsg(""), 3000); // Masquage du message d'erreur après 3 secondes
     } else {
       setWelcomeMessage(`Welcome, ${userName}!`);
+      setTimeout(() => setWelcomeMessage(""), 3000); // Masquage du message d'erreur après 3 secondes
       localStorage.setItem('currentUser', userName); // Sauvegarde du nom d'utilisateur dans localStorage
       router.push("/dashboard/discover"); // Redirection vers la page d'accueil une fois connecté
     }
