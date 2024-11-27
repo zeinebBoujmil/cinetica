@@ -8,7 +8,8 @@ export default function Login() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  
+  const [welcomeMessage, setWelcomeMessage] = useState("");
+
   const { data: session, status } = useSession(); // Gestion de la session avec NextAuth
   const router = useRouter();
   console.log(session);
@@ -28,6 +29,8 @@ export default function Login() {
     const result = await signIn("credentials", {
       username: userName,
       password: password,
+      redirect: false, // Désactive la redirection automatique
+
     });
 
     // Vérification du résultat de la connexion
@@ -35,6 +38,7 @@ export default function Login() {
       setErrMsg(result.error); // Affichage de l'erreur de connexion
       setTimeout(() => setErrMsg(""), 3000); // Masquage du message d'erreur après 3 secondes
     } else {
+      setWelcomeMessage(`Welcome, ${userName}!`);
       localStorage.setItem('currentUser', userName); // Sauvegarde du nom d'utilisateur dans localStorage
       router.push("/dashboard/discover"); // Redirection vers la page d'accueil une fois connecté
     }
