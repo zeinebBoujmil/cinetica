@@ -55,7 +55,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie }) => {
       vote_count: movie.vote_count.toString(),
     }).toString();
   
-    router.push(`/dashboard/details/filmDetails?${queryParams}`);
+    router.push(`/vueDetails/filmDetails?${queryParams}`);
   };
   
 
