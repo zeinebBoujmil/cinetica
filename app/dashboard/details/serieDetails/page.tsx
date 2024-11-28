@@ -68,7 +68,7 @@ const TVShowDetails = () => {
               <p>{serie.original_language.toUpperCase()}</p>
             </div>
             <div>
-              <h3 className="text-gray-400 text-sm">Pays d'origine</h3>
+              <h3 className="text-gray-400 text-sm">Pays d origine</h3>
               <p>{serie.origin_country.join(', ') || 'Inconnu'}</p>
             </div>
             <div>

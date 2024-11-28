@@ -3,13 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { TVShow } from '@/app/entities/TVShow';
 import { useSearch } from '../../contexts/searchContext';
 import ShowCard from '../../cards/showCard';
-import ModalSerie from "../../Modals/modalShow"; // Modal pour les séries
 
 const FavoritesSeries = () => {
   const [favoritesSeries, setFavorites] = useState<TVShow[]>([]); 
   const [currentUser, setCurrentUser] = useState<string | null>(null);
-  const [selectedSerie, setSelectedSerie] = useState<TVShow | null>(null); 
-  const [isModalOpen, setIsModalOpen] = useState(false); // État pour gérer l'ouverture du modal
   const { query } = useSearch();
 
   // Effet pour récupérer l'utilisateur courant
@@ -32,17 +29,7 @@ const FavoritesSeries = () => {
     setFavorites(filteredFavorites);
   }, [query, currentUser]);
 
-  // Ouverture du modal
-  const openModal = (serie: TVShow) => {
-    setSelectedSerie(serie);
-    setIsModalOpen(true);
-  };
 
-  // Fermeture du modal
-  const closeModal = () => {
-    setSelectedSerie(null);
-    setIsModalOpen(false);
-  };
 
   // Rendu conditionnel si pas d'utilisateur
   if (!currentUser) {
@@ -75,13 +62,7 @@ const FavoritesSeries = () => {
         </div>
       )}
       
-      {/* ModalSerie affiché si isModalOpen est true */}
-      <ModalSerie 
-        isOpen={isModalOpen} 
-        onClose={closeModal} 
-        serie={selectedSerie} 
-        isMovie={false} 
-      />
+
     </div>
   );
 };

@@ -6,8 +6,6 @@ import { TVShow } from '../../entities/TVShow';
 import Loading from '../../Loading';
 import MovieCard from '../cards/filmCard';
 import ShowCard from '../cards/showCard';
-import ModalFilm from '../Modals/modalFilm';
-import ModalSerie from '../Modals/modalShow';
 import { useSearch } from '../contexts/searchContext';
 import { useSidebar } from '@/components/ui/sidebar';
 
