@@ -7,6 +7,7 @@ import Navbar from "./Navbar/page";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SearchProvider } from "./contexts/searchContext";
 import { QueryClient , QueryClientProvider } from "@tanstack/react-query";
+import { Suspense } from "react";
 const queryClient = new QueryClient();
 
 export default function RootLayout({
@@ -29,7 +30,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <div className="pt-16"> {/* Ajout d'un padding en haut de 16 unités */}
+            <Suspense fallback={null}>
               {children}
+              </Suspense>
             </div>
           </ThemeProvider>
       </SidebarProvider>
