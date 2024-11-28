@@ -117,6 +117,7 @@ export function AppSidebar() {
 
           {/* Menu de déconnexion */}
           <div >
+          <SidebarGroupLabel>Logout</SidebarGroupLabel>
           <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem key="logout">

@@ -4,17 +4,11 @@ import Loading from "@/app/Loading";
 import { useState, useEffect } from "react";
 import ShowCard from "../../cards/showCard";
 import { useSearch } from "../../contexts/searchContext";
-import ModalSerie from "../../Modals/modalShow";
-import { Movie } from "@/app/entities/Movie";
 
 export default function Popular() {
     const [data, setData] = useState<{ series: TVShow[] } | null>(null);
 
     const { query } = useSearch();
-    const [selectedItem, setSelectedItem] = useState<Movie | TVShow | null>(null);
-    const [isMovie, setIsMovie] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
     useEffect(() => {
         const fetchShows = async () => {
             try {
@@ -43,18 +37,6 @@ export default function Popular() {
 
         fetchShows(); // Appel de la fonction asynchrone
     }, [query]); // Ajout de searchQuery comme dépendance
-    
-    const openModal = (item: Movie | TVShow, type: 'movie' | 'serie') => {
-        setSelectedItem(item);
-        setIsMovie(type === 'movie');
-        setIsModalOpen(true);
-      };
-    
-      const closeModal = () => {
-        setSelectedItem(null);
-        setIsModalOpen(false);
-      };
-
     return (
         <div className="flex flex-col container mx-auto px-4 py-8">
             {data === null ? (
@@ -68,17 +50,12 @@ export default function Popular() {
                     <div className="flex flex-wrap justify-center gap-2">
                         {data.series?.map((serie) => (
                             <ShowCard key={serie.id}
-                                serie={serie} onClick={() => openModal(serie, 'serie')}/>
+                                serie={serie}/>
                         ))}
                     </div>
                 </>
             )}
-                      <ModalSerie
-            isOpen={isModalOpen && !isMovie}
-            onClose={closeModal}
-            serie={selectedItem as TVShow}
-            isMovie={false}
-          />
+
         </div>
     );
 }

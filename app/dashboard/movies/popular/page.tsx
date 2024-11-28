@@ -4,25 +4,12 @@ import Loading from "@/app/Loading";
 import { useState, useEffect } from "react";
 import MovieCard from "../../cards/filmCard";
 import { useSearch } from "../../contexts/searchContext";
-import ModalFilm from "../../Modals/modalFilm";
 
 export default function Popular() {
     const [data, setData] = useState<{ films: Movie[] } | null>(null);
     const { query } = useSearch();
-    const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     
-    const openModal = (movie: Movie) => {
-        setSelectedMovie(movie);
-        setIsModalOpen(true);
-      };
-    
-      const closeModal = () => {
-        setSelectedMovie(null);
-        setIsModalOpen(false);
-      };
-
     useEffect(() => {
         const fetchMovies = async () => {
             try {
@@ -66,19 +53,14 @@ export default function Popular() {
                           </h1>
                         <div className="flex flex-wrap justify-center gap-2">
                             {data?.films?.map((movie) => (
-                                <MovieCard  key={movie.id} movie={movie} onClick={() => openModal(movie)}/>
+                                <MovieCard  key={movie.id} movie={movie}/>
                             ))} 
                         </div>
                     </>
 
                 )}
             </div>
-            <ModalFilm
-            isOpen={isModalOpen}
-            onClose={closeModal}
-            item={selectedMovie}
-            isMovie={true}
-          />
+
 
         </div>
     );

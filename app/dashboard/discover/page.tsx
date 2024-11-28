@@ -15,9 +15,6 @@ import { useSidebar } from '@/components/ui/sidebar';
 export default function Discover() {
     const [data, setData] = useState<{ films: Movie[]; series: TVShow[] } | null>(null);
     const { query } = useSearch(); // Utilisation de la recherche
-    const [selectedItem, setSelectedItem] = useState<Movie | TVShow | null>(null);
-    const [isMovie, setIsMovie] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const { state } = useSidebar(); // Importer le contexte de la sidebar
 
 
@@ -56,18 +53,6 @@ export default function Discover() {
         fetchData(); // Appel de la fonction asynchrone
     }, [query]); // Refiltrer à chaque modification de `query`
 
-    // Gestion de l'ouverture et de la fermeture du modal
-    const openModal = (item: Movie | TVShow, type: 'movie' | 'serie') => {
-        setSelectedItem(item);
-        setIsMovie(type === 'movie');
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setSelectedItem(null);
-        setIsModalOpen(false);
-    };
-
      return (
       <div className="flex flex-col container mx-auto px-4 py-4 ">
           {data === null ? (
@@ -99,7 +84,6 @@ export default function Discover() {
                                   >
                                       <MovieCard
                                           movie={movie}
-                                          onClick={() => openModal(movie, "movie")}
                                       />
                                   </div>
                               ))}
@@ -127,27 +111,12 @@ export default function Discover() {
                                   >
                                       <ShowCard
                                           serie={serie}
-                                          onClick={() => openModal(serie, "serie")}
                                       />
                                   </div>
                               ))}
                           </div>
                       </div>
                   </div>
-  
-                  {/* Modals */}
-                  <ModalFilm
-                      isOpen={isModalOpen && isMovie}
-                      onClose={closeModal}
-                      item={selectedItem as Movie}
-                      isMovie={true}
-                  />
-                  <ModalSerie
-                      isOpen={isModalOpen && !isMovie}
-                      onClose={closeModal}
-                      serie={selectedItem as TVShow}
-                      isMovie={false}
-                  />
               </div>
           )}
       </div>
