@@ -5,7 +5,6 @@ import Loading from "@/app/Loading";
 import { useEffect, useState } from "react";
 import ShowCard from "../../cards/showCard";
 import { useSearch } from "../../contexts/searchContext";
-import { Movie } from "@/app/entities/Movie";
 
 
 export default function OnTheAir() {
