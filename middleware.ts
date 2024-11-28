@@ -5,7 +5,7 @@ const protectedRoutes = ["/dashboard","/dashboard/discover","/dashboard/movies/p
 
 export async function middleware(req: NextRequest) { 
   const url = req.nextUrl.clone(); 
-  const sessionToken = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const sessionToken = await getToken({ req, secret: process.env.TMDB_API_KEY });
 
   //console.log("Session token:", sessionToken);
   //console.log("Requested URL:", req.nextUrl.pathname);
