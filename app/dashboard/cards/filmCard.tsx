@@ -1,19 +1,19 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation'; // Importer le router de Next.js
 import { Movie } from '@/app/entities/Movie';
 import { Star } from 'lucide-react';
 
 interface FilmCardProps {
   movie: Movie;
-  onClick?: () => void; // Optionnel : pour gérer un clic sur la carte
 }
 
-const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }) => {
+const MovieCard: React.FC<FilmCardProps> = ({ movie }) => {
+  const router = useRouter(); 
   const [isFavorite, setIsFavorite] = useState(false);
-  const currentUser = localStorage.getItem('currentUser'); // Récupérer l'utilisateur connecté
+  const currentUser = localStorage.getItem('currentUser'); 
 
   useEffect(() => {
-    // Vérifie si le film est déjà dans les favoris
     const favorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');
     setIsFavorite(favorites.some((fav: Movie) => fav.id === movie.id));
   }, [movie.id, currentUser]);
@@ -26,7 +26,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }) => {
 
     const favoritesKey = `favorites_${currentUser}`;
     const favorites = JSON.parse(localStorage.getItem(favoritesKey) || '[]');
-    
+
     if (isFavorite) {
       // Supprime le film des favoris
       const updatedFavorites = favorites.filter((fav: Movie) => fav.id !== movie.id);
@@ -39,11 +39,30 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie, onClick }) => {
       setIsFavorite(true);
     }
   };
+  const handleCardClick = () => {
+    const queryParams = new URLSearchParams({
+      id: movie.id.toString(),
+      title: movie.title,
+      original_title: movie.original_title,
+      overview: movie.overview,
+      release_date: movie.release_date,
+      poster_path: movie.poster_path,
+      backdrop_path: movie.backdrop_path,
+      genre_ids: JSON.stringify(movie.genre_ids), // Sérialisation des genres
+      original_language: movie.original_language,
+      popularity: movie.popularity.toString(),
+      vote_average: movie.vote_average.toString(),
+      vote_count: movie.vote_count.toString(),
+    }).toString();
+  
+    router.push(`/dashboard/details/filmDetails?${queryParams}`);
+  };
+  
 
   return (
     <div
       className="hover:scale-105 transition-transform duration-300 hover:shadow-lg hover:shadow-gray-500/50 rounded-lg overflow-hidden w-64 h-96 mx-auto flex flex-col"
-      onClick={onClick}
+      onClick={handleCardClick}
     >
       <img
         src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}

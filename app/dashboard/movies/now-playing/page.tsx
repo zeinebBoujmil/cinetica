@@ -4,27 +4,14 @@ import { Movie } from "@/app/entities/Movie";
 import Loading from "@/app/Loading";
 import MovieCard from "../../cards/filmCard";
 import { useSearch } from "../../contexts/searchContext";
-import ModalFilm from "../../Modals/modalFilm";
 
 
 export default function NowPlaying() {
     const [data, setData] = useState<{ films: Movie[] } | null>(null);
     const { query } = useSearch();
-    const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    
 
-    const openModal = (movie: Movie) => {
-        setSelectedMovie(movie);
-        setIsModalOpen(true);
-      };
-    
-      const closeModal = () => {
-        setSelectedMovie(null);
-        setIsModalOpen(false);
-      };
 
-    
+
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -72,19 +59,12 @@ export default function NowPlaying() {
                             {data?.films?.map((movie) => (
                                 <MovieCard key={movie.id}
                                     movie={movie} 
-                                    onClick={() => openModal(movie)}
                                 />
                             ))}
                         </div>
                     </>
                 )}
             </div>
-            <ModalFilm
-                  isOpen={isModalOpen}
-                  onClose={closeModal}
-                  item={selectedMovie}
-                  isMovie={true}
-                />
         </div>
                  
     );

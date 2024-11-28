@@ -54,15 +54,17 @@ const FavoritesSeries = () => {
   }
 
   return (
-    <div className="min-h-screen text-gray-700 py-8 px-6">
-      <h2 className="text-4xl font-bold mb-6 text-center">Vos Séries Favorites</h2>
+    <div className="min-h-screen py-8 px-6">
+     <h1 className="text-3xl font-extrabold mb-6 text-center relative">
+                          Vos Series Favorites
+                          <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
+                      </h1>
       {favoritesSeries.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {favoritesSeries.map((serie) => (
             <div key={serie.id} className="flex justify-center">
               <ShowCard 
                 serie={serie} 
-                onClick={() => openModal(serie)} // Ouvre le modal quand une série est cliquée
               />
             </div>
           ))}

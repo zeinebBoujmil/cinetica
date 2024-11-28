@@ -3,13 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Movie } from '@/app/entities/Movie';
 import { useSearch } from '../../contexts/searchContext';
 import MovieCard from '../../cards/filmCard';
-import ModalFilm from "../../Modals/modalFilm";
 
 const FavoritesFilms = () => {
   const [favorites, setFavorites] = useState<Movie[]>([]); 
   const [currentUser, setCurrentUser] = useState<string | null>(null);
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null); 
-  const [isModalOpen, setIsModalOpen] = useState(false); // État pour gérer l'ouverture du modal
   const { query } = useSearch();
 
   // Effet pour récupérer l'utilisateur courant
@@ -32,18 +29,6 @@ const FavoritesFilms = () => {
     setFavorites(filteredFavorites);
   }, [query, currentUser]);
 
-  // Ouverture du modal
-  const openModal = (movie: Movie) => {
-    setSelectedMovie(movie);
-    setIsModalOpen(true);
-  };
-
-  // Fermeture du modal
-  const closeModal = () => {
-    setSelectedMovie(null);
-    setIsModalOpen(false);
-  };
-
   // Rendu conditionnel si pas d'utilisateur
   if (!currentUser) {
     return (
@@ -54,15 +39,16 @@ const FavoritesFilms = () => {
   }
 
   return (
-    <div className="min-h-screen text-gray-700 py-8 px-6">
-      <h2 className="text-4xl font-bold mb-6 text-center">Vos Films Favoris</h2>
-      {favorites.length > 0 ? (
+    <div className="min-h-screen py-8 px-6">
+<h1 className="text-3xl font-extrabold mb-6 text-center relative">
+                          Vos Films Favorites 
+                          <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
+                      </h1>      {favorites.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {favorites.map((movie) => (
             <div key={movie.id} className="flex justify-center">
               <MovieCard 
                 movie={movie} 
-                onClick={() => openModal(movie)} // Ouvre le modal quand un film est cliqué
               />
             </div>
           ))}
@@ -73,13 +59,6 @@ const FavoritesFilms = () => {
         </div>
       )}
       
-      {/* ModalFilm affiché si isModalOpen est true */}
-      <ModalFilm 
-        isOpen={isModalOpen} 
-        onClose={closeModal} 
-        item={selectedMovie} 
-        isMovie={true} 
-      />
     </div>
   );
 };

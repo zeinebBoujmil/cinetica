@@ -12,7 +12,8 @@ export default function Login() {
 
   const { data: session, status } = useSession(); // Gestion de la session avec NextAuth
   const router = useRouter();
-  console.log(session);
+  console.log("heyy",session);
+  console.log("statut ::",status);
 
   // Redirection vers la page d'accueil si l'utilisateur est déjà connecté
   useEffect(() => {

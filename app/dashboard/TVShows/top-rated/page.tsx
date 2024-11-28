@@ -4,16 +4,11 @@ import Loading from "@/app/Loading";
 import { useState, useEffect } from "react";
 import ShowCard from "../../cards/showCard";
 import { useSearch } from "../../contexts/searchContext";
-import { Movie } from "@/app/entities/Movie";
-import ModalSerie from "../../Modals/modalShow";
 
 export default function TopRatedSeries() {
     const [data, setData] = useState<{ series: TVShow[] } | null>(null);
 
     const { query } = useSearch();
-    const [selectedItem, setSelectedItem] = useState<Movie | TVShow | null>(null);
-    const [isMovie, setIsMovie] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchShows = async () => {
@@ -41,18 +36,9 @@ export default function TopRatedSeries() {
             }
         };
 
-        fetchShows(); // Appel de la fonction asynchrone
-    }, [query]); // Ajout de searchQuery comme dépendance
-    const openModal = (item: Movie | TVShow, type: 'movie' | 'serie') => {
-        setSelectedItem(item);
-        setIsMovie(type === 'movie');
-        setIsModalOpen(true);
-      };
-    
-      const closeModal = () => {
-        setSelectedItem(null);
-        setIsModalOpen(false);
-      };
+        fetchShows();
+    }, [query]); 
+
 
     return (
         <div className="flex flex-col container mx-auto px-4 py-8">
@@ -67,17 +53,12 @@ export default function TopRatedSeries() {
                     <div className="flex flex-wrap justify-center gap-2">
                         {data.series?.map((serie) => (
                             <ShowCard key={serie.id}
-                                serie={serie}  onClick={() => openModal(serie, 'serie')}/>
+                                serie={serie} />
                         ))}
                     </div>
                 </>
             )}
-                      <ModalSerie
-            isOpen={isModalOpen && !isMovie}
-            onClose={closeModal}
-            serie={selectedItem as TVShow}
-            isMovie={false}
-          />
+
         </div>
     );
 }
