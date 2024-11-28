@@ -1,55 +1,18 @@
 'use client';
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import { signIn, useSession } from "next-auth/react"; // Utilisation de NextAuth pour l'authentification
-import "/app/globals.css"; // Si nécessaire
+import { useLogin } from "./useCase/useLogin";
+import "/app/globals.css";
 
 export default function Login() {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-  const [welcomeMessage, setWelcomeMessage] = useState("");
-
-  const { data: session, status } = useSession(); // Gestion de la session avec NextAuth
-  const router = useRouter();
-  console.log("heyy",session);
-  console.log("statut ::",status);
-
-  // Redirection vers la page d'accueil si l'utilisateur est déjà connecté
-  useEffect(() => {
-    if (status === 'authenticated') {
-      router.push("/dashboard/discover");
-    }
-  }, [status]);
-
-  // Fonction de gestion du login
-  const handleLogIn = async (event: React.FormEvent) => {
-    event.preventDefault();
-    
-    // Connexion via NextAuth
-    const result = await signIn("credentials", {
-      username: userName,
-      password: password,
-      redirect: false, // Désactive la redirection automatique
-
-    });
-
-    // Vérification du résultat de la connexion
-    if (result?.error) {
-      setErrMsg(result.error); // Affichage de l'erreur de connexion
-      setTimeout(() => setErrMsg(""), 3000); // Masquage du message d'erreur après 3 secondes
-    } else {
-      setWelcomeMessage(`Welcome, ${userName}!`);
-      setTimeout(() => setWelcomeMessage(""), 3000); // Masquage du message d'erreur après 3 secondes
-      localStorage.setItem('currentUser', userName); // Sauvegarde du nom d'utilisateur dans localStorage
-      router.push("/dashboard/discover"); // Redirection vers la page d'accueil une fois connecté
-    }
-  };
-
-  // Fonction pour rediriger vers la page d'inscription
-  const goToSignUp = () => {
-    router.push("/signup");
-  };
+  const {
+    userName,
+    password,
+    errMsg,
+    welcomeMessage,
+    setUserName,
+    setPassword,
+    handleLogin,
+    goToSignUp,
+  } = useLogin();
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gray-800">
@@ -75,7 +38,7 @@ export default function Login() {
         </div>
 
         <h2 className="text-2xl font-bold text-center mb-6">Log In</h2>
-        <form onSubmit={handleLogIn}>
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label htmlFor="username" className="block text-gray-700 font-semibold mb-2">
               Username
@@ -116,25 +79,24 @@ export default function Login() {
         >
           Sign Up
         </button>
-
       </div>
 
-{errMsg && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
-      <h2 className="text-3xl font-bold mb-4">{errMsg}</h2>
-      <p>nom d utilisateur ou mdp incorrect </p>
+      {errMsg && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
+            <h2 className="text-3xl font-bold mb-4">{errMsg}</h2>
+            <p>Nom d'utilisateur ou mot de passe incorrect.</p>
+          </div>
+        </div>
+      )}
+      {welcomeMessage && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
+            <h2 className="text-3xl font-bold mb-4">{welcomeMessage}</h2>
+            <p>Redirection vers votre page d'accueil Cinetica...</p>
+          </div>
+        </div>
+      )}
     </div>
-  </div>
-)}
-{welcomeMessage && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
-      <h2 className="text-3xl font-bold mb-4">{welcomeMessage}</h2>
-      <p>Redirection vers votre page d accueil Cinetica ...</p>
-    </div>
-  </div>
-)}
-</div>
   );
 }
