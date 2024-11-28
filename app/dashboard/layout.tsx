@@ -1,10 +1,13 @@
 
+'use client'
 import "/app/globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import Navbar from "./Navbar/page";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SearchProvider } from "./contexts/searchContext";
+import { QueryClient , QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 
 export default function RootLayout({
   children,
@@ -13,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <main>
-
+    <QueryClientProvider client={queryClient}>
     <SearchProvider>
       <SidebarProvider>
         <Navbar />
@@ -31,6 +34,7 @@ export default function RootLayout({
           </ThemeProvider>
       </SidebarProvider>
     </SearchProvider>
+    </QueryClientProvider>
     </main>
 
   );
