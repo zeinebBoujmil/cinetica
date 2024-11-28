@@ -69,6 +69,20 @@ export function AppSidebar() {
           <br />
           <br />
           <br />
+          <SidebarGroupContent>
+            <SidebarMenu>
+              
+                <SidebarMenuItem >
+                  <SidebarMenuButton asChild>
+                    <a href="/dashboard/discover">
+                      <Film/>
+                      <span>Discover</span>
+
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
           <SidebarGroupLabel>Movies</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
