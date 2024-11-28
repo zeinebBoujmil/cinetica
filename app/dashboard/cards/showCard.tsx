@@ -62,7 +62,7 @@ const ShowCard: React.FC<ShowCardProps> = ({ serie }) => {
       vote_count: serie.vote_count.toString(),
     }).toString();
 
-    router.push(`/dashboard/details/serieDetails?${queryParams}`);
+    router.push(`/vueDetails/serieDetails?${queryParams}`);
   };
 
   return (
