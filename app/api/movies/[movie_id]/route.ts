@@ -1,5 +1,4 @@
 import { NextRequest } from "next/server";
-import { Movie } from "@/app/entities/Movie";
 
 export async function GET(req: NextRequest, { params }: { params: { movie_id: string } }) {
   const { movie_id } = params; // Récupère l'ID du film depuis les paramètres
