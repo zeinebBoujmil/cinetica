@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'; // Importer le router de Next.js
+import { useRouter } from 'next/navigation';
 import { Movie } from '@/app/entities/Movie';
 import { Star } from 'lucide-react';
 
@@ -9,9 +9,9 @@ interface FilmCardProps {
 }
 
 const MovieCard: React.FC<FilmCardProps> = ({ movie }) => {
-  const router = useRouter(); 
+  const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(false);
-  const currentUser = localStorage.getItem('currentUser'); 
+  const currentUser = localStorage.getItem('currentUser');
 
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');
@@ -39,25 +39,11 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie }) => {
       setIsFavorite(true);
     }
   };
+
   const handleCardClick = () => {
-    const queryParams = new URLSearchParams({
-      id: movie.id.toString(),
-      title: movie.title,
-      original_title: movie.original_title,
-      overview: movie.overview,
-      release_date: movie.release_date,
-      poster_path: movie.poster_path,
-      backdrop_path: movie.backdrop_path,
-      genre_ids: JSON.stringify(movie.genre_ids), // Sérialisation des genres
-      original_language: movie.original_language,
-      popularity: movie.popularity.toString(),
-      vote_average: movie.vote_average.toString(),
-      vote_count: movie.vote_count.toString(),
-    }).toString();
-  
-    router.push(`/vueDetails/filmDetails?${queryParams}`);
+    // Redirige vers la page des détails en utilisant uniquement l'ID
+    router.push(`/vueDetails/filmDetails/${movie.id}`);
   };
-  
 
   return (
     <div
@@ -70,9 +56,9 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie }) => {
         className="w-full h-2/3 object-cover"
       />
       <div className="p-4 flex-1 flex flex-col justify-between">
-        <h3 className="text-lg font-semibold text-gray-800">{movie.title}</h3>
+        <h3 className="text-lg font-semibold">{movie.title}</h3>
         <div className="flex items-center justify-between">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm">
             {movie.release_date
               ? movie.release_date.split('-').reverse().join('-')
               : 'Inconnue'}
@@ -94,7 +80,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie }) => {
               }}
             ></div>
 
-            <span className="absolute font-bold text-gray-800 text-xs">
+            <span className="absolute font-bold text-xs">
               {movie.vote_average.toFixed(2)}
             </span>
           </div>
