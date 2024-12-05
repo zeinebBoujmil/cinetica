@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Movie } from "@/app/entities/Movie";
 import { MovieCredits } from "@/app/entities/MovieCredits";
 import Loading from "@/app/Loading";
@@ -12,7 +11,6 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const router = useRouter();
   console.log("idddddddddd:",params.id);
 
   // Récupération des détails du film
