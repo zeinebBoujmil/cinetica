@@ -1,22 +1,42 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Movie } from '@/app/entities/Movie';
+import { MovieDetails } from '@/app/entities/MovieDetails'; // Utilisation de l'interface `MovieDetails`
 import { Star } from 'lucide-react';
 
 interface FilmCardProps {
-  movie: Movie;
+  id: number; // Seul l'ID est requis
 }
 
-const MovieCard: React.FC<FilmCardProps> = ({ movie }) => {
+const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
   const router = useRouter();
+  const [movie, setMovie] = useState<MovieDetails | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const currentUser = localStorage.getItem('currentUser');
 
+  // Récupérer les détails du film en fonction de l'ID
+  useEffect(() => {
+    const fetchMovieDetails = async () => {
+      try {
+        const response = await fetch(`/api/movies/${id}`);
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des détails du film.");
+        }
+        const data = await response.json();
+        setMovie(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMovieDetails();
+  }, [id]);
+
+  // Vérifier si le film est déjà dans les favoris
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');
-    setIsFavorite(favorites.some((fav: Movie) => fav.id === movie.id));
-  }, [movie.id, currentUser]);
+    setIsFavorite(favorites.some((fav: MovieDetails) => fav.id === id));
+  }, [id, currentUser]);
 
   const toggleFavorite = () => {
     if (!currentUser) {
@@ -29,10 +49,10 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie }) => {
 
     if (isFavorite) {
       // Supprime le film des favoris
-      const updatedFavorites = favorites.filter((fav: Movie) => fav.id !== movie.id);
+      const updatedFavorites = favorites.filter((fav: MovieDetails) => fav.id !== id);
       localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites));
       setIsFavorite(false);
-    } else {
+    } else if (movie) {
       // Ajoute le film aux favoris
       favorites.push(movie);
       localStorage.setItem(favoritesKey, JSON.stringify(favorites));
@@ -41,9 +61,17 @@ const MovieCard: React.FC<FilmCardProps> = ({ movie }) => {
   };
 
   const handleCardClick = () => {
-    // Redirige vers la page des détails en utilisant uniquement l'ID
-    router.push(`/vueDetails/filmDetails/${movie.id}`);
+    // Redirige vers la page des détails en utilisant l'ID
+    router.push(`/vueDetails/filmDetails/${id}`);
   };
+
+  if (!movie) {
+    return (
+      <div className="w-64 h-96 mx-auto flex items-center justify-center text-gray-400">
+        Chargement...
+      </div>
+    );
+  }
 
   return (
     <div
