@@ -34,7 +34,7 @@ const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError("Une erreur s'est produite lors du chargement des données.");
+        setError("Une erreur s est produite lors du chargement des données.");
         setLoading(false);
       }
     };
@@ -92,7 +92,7 @@ const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
               <p>{series.popularity.toFixed(1)} / 100</p>
             </div>
             <div>
-              <h3 className="text-gray-400 text-sm">Nombre d'épisodes</h3>
+              <h3 className="text-gray-400 text-sm">Nombre d épisodes</h3>
               <p>{series.number_of_episodes}</p>
             </div>
             <div>
