@@ -81,7 +81,7 @@ export default function Discover() {
                                                 snap-start p-2"
                                   >
                                       <MovieCard
-                                          movie={movie}
+                                          id={movie.id}
                                       />
                                   </div>
                               ))}
@@ -108,7 +108,7 @@ export default function Discover() {
                                                snap-start p-2"
                                   >
                                       <ShowCard
-                                          serie={serie}
+                                          id={serie.id}
                                       />
                                   </div>
                               ))}

@@ -20,7 +20,7 @@ export default function TopRatedSeries() {
       </h1>
       <div className="flex flex-wrap justify-center gap-2">
         {filteredSeries?.map((serie) => (
-          <ShowCard key={serie.id} serie={serie} />
+          <ShowCard key={serie.id} id={serie.id} />
         ))}
       </div>
     </div>

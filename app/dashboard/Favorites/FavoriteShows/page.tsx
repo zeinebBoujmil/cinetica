@@ -51,7 +51,7 @@ const FavoritesSeries = () => {
           {favoritesSeries.map((serie) => (
             <div key={serie.id} className="flex justify-center">
               <ShowCard 
-                serie={serie} 
+                id={serie.id} 
               />
             </div>
           ))}

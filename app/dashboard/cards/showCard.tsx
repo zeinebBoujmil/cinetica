@@ -1,26 +1,42 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'; // Importer le router pour la redirection
-import { TVShow } from '@/app/entities/TVShow';
+import { useRouter } from 'next/navigation';
+import { ShowDetails } from '@/app/entities/ShowDetails';
 import { Star } from 'lucide-react';
 
 interface ShowCardProps {
-  serie: TVShow;
+  id: number; // L'ID de la série
 }
 
-const ShowCard: React.FC<ShowCardProps> = ({ serie }) => {
-  const router = useRouter(); // Initialiser le router
+const ShowCard: React.FC<ShowCardProps> = ({ id }) => {
+  const router = useRouter();
+  const [series, setSeries] = useState<ShowDetails | null>(null);
+  const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  const currentUser = localStorage.getItem('currentUser'); // Récupérer l'utilisateur connecté
+  const currentUser = localStorage.getItem('currentUser');
 
   useEffect(() => {
-    if (currentUser) {
-      // Vérifier si la série est déjà dans les favoris de l'utilisateur
-      const favoritesKey = `favoritesSeries_${currentUser}`;
-      const favorites = JSON.parse(localStorage.getItem(favoritesKey) || '[]');
-      setIsFavorite(favorites.some((fav: TVShow) => fav.id === serie.id));
-    }
-  }, [serie.id, currentUser]);
+    const fetchSeriesDetails = async () => {
+      try {
+        const response = await fetch(`/api/shows/${id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch series details.");
+        }
+
+        const data = await response.json();
+        setSeries(data);
+        setLoading(false);
+
+        const favorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');
+        setIsFavorite(favorites.some((fav: ShowDetails) => fav.id === id));
+      } catch (error) {
+        console.error("Erreur lors de la récupération des détails de la série :", error);
+        setLoading(false);
+      }
+    };
+
+    fetchSeriesDetails();
+  }, [id, currentUser]);
 
   const toggleFavorite = () => {
     if (!currentUser) {
@@ -28,86 +44,58 @@ const ShowCard: React.FC<ShowCardProps> = ({ serie }) => {
       return;
     }
 
-    const favoritesKey = `favoritesSeries_${currentUser}`;
+    const favoritesKey = `favorites_${currentUser}`;
     const favorites = JSON.parse(localStorage.getItem(favoritesKey) || '[]');
 
     if (isFavorite) {
-      // Supprime la série des favoris
-      const updatedFavorites = favorites.filter((fav: TVShow) => fav.id !== serie.id);
+      const updatedFavorites = favorites.filter((fav: ShowDetails) => fav.id !== id);
       localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites));
       setIsFavorite(false);
     } else {
-      // Ajoute la série aux favoris
-      favorites.push(serie);
+      favorites.push(series!);
       localStorage.setItem(favoritesKey, JSON.stringify(favorites));
       setIsFavorite(true);
     }
   };
 
-  const handleCardClick = () => {
-    // Redirection vers la page des détails avec des query parameters
-    const queryParams = new URLSearchParams({
-      id: serie.id.toString(),
-      name: serie.name,
-      original_name: serie.original_name,
-      overview: serie.overview,
-      first_air_date: serie.first_air_date,
-      poster_path: serie.poster_path,
-      backdrop_path: serie.backdrop_path,
-      genre_ids: JSON.stringify(serie.genre_ids), // Sérialisation des genres
-      origin_country: JSON.stringify(serie.origin_country), // Sérialisation des pays
-      original_language: serie.original_language,
-      popularity: serie.popularity.toString(),
-      vote_average: serie.vote_average.toString(),
-      vote_count: serie.vote_count.toString(),
-    }).toString();
+  if (loading) {
+    return (
+      <div className="w-64 h-96 mx-auto flex items-center justify-center text-gray-400">
+        Chargement...
+      </div>
+    );
+  }
 
-    router.push(`/vueDetails/serieDetails?${queryParams}`);
-  };
+  if (!series) {
+    return (
+      <div className="w-64 h-96 mx-auto flex items-center justify-center text-red-500">
+        Série introuvable.
+      </div>
+    );
+  }
 
   return (
     <div
       className="hover:scale-105 transition-transform duration-300 hover:shadow-lg hover:shadow-gray-500/50 rounded-lg overflow-hidden w-64 h-96 mx-auto flex flex-col"
-      onClick={handleCardClick} // Redirection au clic sur la carte
+      onClick={() => router.push(`/vueDetails/serieDetails/${id}`)}
     >
       <img
-        src={`https://image.tmdb.org/t/p/w300${serie.poster_path}`}
-        alt={serie.name}
+        src={`https://image.tmdb.org/t/p/w300${series.poster_path}`}
+        alt={series.name}
         className="w-full h-2/3 object-cover"
       />
       <div className="p-4 flex-1 flex flex-col justify-between">
-        <h3 className="text-lg font-semibold text-gray-800">{serie.name}</h3>
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-gray-600">
-            {serie.first_air_date
-              ? serie.first_air_date.split('-').reverse().join('-')
-              : 'Inconnue'}
-          </p>
-          <div className="relative flex items-center justify-center w-8 h-8 ml-2">
-            <div className="absolute w-full h-full rounded-full border-2 border-gray-300"></div>
-            <div
-              className="absolute w-full h-full rounded-full border-2"
-              style={{
-                borderColor:
-                  serie.vote_average >= 7
-                    ? 'green'
-                    : serie.vote_average >= 4
-                    ? 'orange'
-                    : 'red',
-                borderTopColor: 'transparent',
-                transform: `rotate(${(serie.vote_average / 10) * 360}deg)`,
-              }}
-            ></div>
-            <span className="absolute font-bold text-gray-800 text-xs">
-              {serie.vote_average.toFixed(2)}
-            </span>
-          </div>
-        </div>
+        <h3 className="text-lg font-semibold">{series.name}</h3>
+        <p className="text-sm">
+          {series.first_air_date
+            ? series.first_air_date.split('-').reverse().join('-')
+            : 'Inconnue'}
+        </p>
       </div>
 
       <button
         onClick={(e) => {
-          e.stopPropagation(); // Empêche le clic sur l'étoile de déclencher `handleCardClick`
+          e.stopPropagation(); // Empêche le clic sur l'étoile de déclencher `onClick`
           toggleFavorite();
         }}
         className={`text-lg self-end p-2 ${isFavorite ? 'text-yellow-400' : 'text-gray-400'}`}

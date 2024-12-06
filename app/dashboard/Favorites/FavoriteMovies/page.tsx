@@ -48,7 +48,7 @@ const FavoritesFilms = () => {
           {favorites.map((movie) => (
             <div key={movie.id} className="flex justify-center">
               <MovieCard
-                movie={movie}
+                id={movie.id}
               />
             </div>
           ))}
