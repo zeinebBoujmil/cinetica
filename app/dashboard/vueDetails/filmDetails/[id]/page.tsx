@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Importation du hook
 import { Movie } from "@/app/entities/Movie";
 import { MovieCredits } from "@/app/entities/MovieCredits";
 import Loading from "@/app/Loading";
