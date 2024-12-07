@@ -65,7 +65,7 @@ export default function Discover() {
                 <div className="flex w-max space-x-4 p-4">
                     {data?.films.map((movie) => (
                         <div key={movie.id} className="shrink-0">
-                            <MovieCard id={movie.id} />
+                            <MovieCard key={movie.id} id={movie.id} />
                         </div>
                     ))}
                 </div>
@@ -78,7 +78,7 @@ export default function Discover() {
                 <div className="flex w-max space-x-4 p-4">
                     {data?.series.map((serie) => (
                         <div key={serie.id} className="shrink-0">
-                            <ShowCard id={serie.id} />
+                            <ShowCard  key={serie.id} id={serie.id} />
                         </div>
                     ))}
                 </div>
