@@ -50,7 +50,7 @@ export default function Discover() {
     }, [query]); // Refiltrer à chaque modification de `query`
 
      return (
-<div className="flex flex-col min-h-screen max-h-screen max-w-screen-lg min-w-screen-lg container mx-auto px-4 py-4">
+<div className="flex flex-col min-h-screen max-h-screen-lg max-w-screen-lg min-w-screen-lg container mx-auto px-4 py-4 overflow-x-hidden">
 {data === null ? (
               <Loading />
           ) : (
