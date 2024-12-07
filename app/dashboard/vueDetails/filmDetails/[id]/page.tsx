@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // Importation du hook
 import { Movie } from "@/app/entities/Movie";
 import { MovieCredits } from "@/app/entities/MovieCredits";
 import Loading from "@/app/Loading";
@@ -11,9 +12,7 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  console.log("idddddddddd:",params.id);
 
-  // Récupération des détails du film
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
@@ -26,8 +25,6 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
 
         const movieData = await movieResponse.json();
         const creditsData = await creditsResponse.json();
-        console.log("filmsssss:",movieData);
-        console.log("actors:",creditsData);
 
         setMovie(movieData);
         setCredits(creditsData);
@@ -52,6 +49,7 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="relative min-h-screen bg-gray-900 text-white">
+
       {/* Arrière-plan flou */}
       <div
         className="absolute inset-0 bg-cover bg-center filter blur-md opacity-50"

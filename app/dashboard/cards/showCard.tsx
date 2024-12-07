@@ -77,7 +77,7 @@ const ShowCard: React.FC<ShowCardProps> = ({ id }) => {
   return (
     <div
       className="hover:scale-105 transition-transform duration-300 hover:shadow-lg hover:shadow-gray-500/50 rounded-lg overflow-hidden w-64 h-96 mx-auto flex flex-col"
-      onClick={() => router.push(`/vueDetails/serieDetails/${id}`)}
+      onClick={() => router.push(`/dashboard/vueDetails/serieDetails/${id}`)}
     >
       <img
         src={`https://image.tmdb.org/t/p/w300${series.poster_path}`}

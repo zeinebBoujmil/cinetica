@@ -62,7 +62,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
 
   const handleCardClick = () => {
     // Redirige vers la page des détails en utilisant l'ID
-    router.push(`/vueDetails/filmDetails/${id}`);
+    router.push(`/dashboard/vueDetails/filmDetails/${id}`);
   };
 
   if (!movie) {
