@@ -50,15 +50,14 @@ export default function Discover() {
     }, [query]); // Refiltrer à chaque modification de `query`
 
      return (
-      <div className="flex flex-col container mx-auto px-4 py-4 ">
-          {data === null ? (
+<div className="flex flex-col min-h-screen max-h-screen max-w-screen-lg min-w-screen-lg container mx-auto px-4 py-4">
+{data === null ? (
               <Loading />
           ) : (
               <div
                   className="relative flex flex-col py-4"
               >
                   {/* Section Films */}
-                  <div className="overflow-hidden ">
                       <h1 className="text-3xl font-extrabold mb-6 text-center relative">
                           Films
                           <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
@@ -80,7 +79,6 @@ export default function Discover() {
                               ))}
                           </div>
                       </div>
-                  </div>
   
                   {/* Section Séries */}
                   <div className="mb-12 overflow-hidden px-4">
