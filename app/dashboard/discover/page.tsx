@@ -7,13 +7,11 @@ import Loading from '../../Loading';
 import MovieCard from '../cards/filmCard';
 import ShowCard from '../cards/showCard';
 import { useSearch } from '../contexts/searchContext';
-import { useSidebar } from '@/components/ui/sidebar';
 
 
 export default function Discover() {
     const [data, setData] = useState<{ films: Movie[]; series: TVShow[] } | null>(null);
-    const { query } = useSearch(); // Utilisation de la recherche
-    const { state } = useSidebar(); // Importer le contexte de la sidebar
+    const { query } = useSearch(); 
 
 
     useEffect(() => {
@@ -57,13 +55,10 @@ export default function Discover() {
               <Loading />
           ) : (
               <div
-                  className="relative flex flex-col px-4 py-4"
-                  style={{
-                      width: state === "expanded" ? "calc(100vw - 16rem)" : "100vw",
-                  }}
+                  className="relative flex flex-col py-4"
               >
                   {/* Section Films */}
-                  <div className="mb-12 overflow-hidden px-4 ">
+                  <div className="overflow-hidden ">
                       <h1 className="text-3xl font-extrabold mb-6 text-center relative">
                           Films
                           <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
@@ -71,9 +66,7 @@ export default function Discover() {
                       <div className="overflow-x-auto px-4">
                           <div 
                               className="flex gap-4 pb-4 
-                                       scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200
-                                       snap-x snap-mandatory"
-                          >
+                                       scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"                          >
                               {data.films.map((movie) => (
                                   <div 
                                       key={movie.id} 
