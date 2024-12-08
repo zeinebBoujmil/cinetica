@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import type { ShowDetails } from "@/app/entities/ShowDetails";
+import { TVShow } from "@/app/entities/TVShow";
 
 export async function GET(req: NextRequest, { params }: { params: { series_id: string } }) {
   const { series_id } = params; // Récupère l'ID de la série depuis les paramètres
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest, { params }: { params: { series_id: s
     const data = await response.json();
 
     // Cast de la réponse en SeriesDetails
-    const seriesDetails = data as ShowDetails;
+    const seriesDetails = data as TVShow;
 
     // Validation supplémentaire (optionnelle) pour vérifier les champs essentiels
     if (!seriesDetails.id || !seriesDetails.name) {

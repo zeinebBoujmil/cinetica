@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MovieDetails } from '@/app/entities/MovieDetails'; // Utilisation de l'interface `MovieDetails`
 import { Star } from 'lucide-react';
+import { Movie } from '@/app/entities/Movie';
 
 interface FilmCardProps {
   id: number; // Seul l'ID est requis
@@ -10,7 +10,7 @@ interface FilmCardProps {
 
 const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
   const router = useRouter();
-  const [movie, setMovie] = useState<MovieDetails | null>(null);
+  const [movie, setMovie] = useState<Movie | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const currentUser = localStorage.getItem('currentUser');
 
@@ -35,7 +35,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
   // Vérifier si le film est déjà dans les favoris
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');
-    setIsFavorite(favorites.some((fav: MovieDetails) => fav.id === id));
+    setIsFavorite(favorites.some((fav: Movie) => fav.id === id));
   }, [id, currentUser]);
 
   const toggleFavorite = () => {
@@ -49,7 +49,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
 
     if (isFavorite) {
       // Supprime le film des favoris
-      const updatedFavorites = favorites.filter((fav: MovieDetails) => fav.id !== id);
+      const updatedFavorites = favorites.filter((fav: Movie) => fav.id !== id);
       localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites));
       setIsFavorite(false);
     } else if (movie) {
@@ -62,7 +62,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
 
   const handleCardClick = () => {
     // Redirige vers la page des détails en utilisant l'ID
-    router.push(`/dashboard/vueDetails/filmDetails/${id}`);
+    router.push(`/vueDetails/filmDetails/${id}`);
   };
 
   if (!movie) {

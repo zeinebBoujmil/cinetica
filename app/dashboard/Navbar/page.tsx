@@ -11,13 +11,12 @@ export default function Navbar() {
   return (
     <nav className="bg-white shadow-md fixed w-full top-0 z-50 dark:bg-black">
       <div className="container mx-auto flex justify-between items-center px-4 py-3">
-        <div className="text-lg font-bold text-gray-800 dark:text-gray-200">
+        <div className="text-lg font-bold ">
           Cinetica
         </div>
 
-        {/* Barre de recherche et bouton mode sombre */}
         <div className="flex items-center space-x-4">
-          {/* Barre de recherche améliorée */}
+          {/* Barre de recherche */}
           <div className="relative w-full">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             <input
