@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ShowDetails } from '@/app/entities/ShowDetails';
 import { Star } from 'lucide-react';
+import { TVShow } from '@/app/entities/TVShow';
 
 interface ShowCardProps {
   id: number; // L'ID de la série
@@ -10,7 +10,7 @@ interface ShowCardProps {
 
 const ShowCard: React.FC<ShowCardProps> = ({ id }) => {
   const router = useRouter();
-  const [series, setSeries] = useState<ShowDetails | null>(null);
+  const [series, setSeries] = useState<TVShow | null>(null);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const currentUser = localStorage.getItem('currentUser');
@@ -28,7 +28,7 @@ const ShowCard: React.FC<ShowCardProps> = ({ id }) => {
         setLoading(false);
 
         const favorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');
-        setIsFavorite(favorites.some((fav: ShowDetails) => fav.id === id));
+        setIsFavorite(favorites.some((fav: TVShow) => fav.id === id));
       } catch (error) {
         console.error("Erreur lors de la récupération des détails de la série :", error);
         setLoading(false);
@@ -48,7 +48,7 @@ const ShowCard: React.FC<ShowCardProps> = ({ id }) => {
     const favorites = JSON.parse(localStorage.getItem(favoritesKey) || '[]');
 
     if (isFavorite) {
-      const updatedFavorites = favorites.filter((fav: ShowDetails) => fav.id !== id);
+      const updatedFavorites = favorites.filter((fav: TVShow) => fav.id !== id);
       localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites));
       setIsFavorite(false);
     } else {
@@ -77,7 +77,7 @@ const ShowCard: React.FC<ShowCardProps> = ({ id }) => {
   return (
     <div
       className="hover:scale-105 transition-transform duration-300 hover:shadow-lg hover:shadow-gray-500/50 rounded-lg overflow-hidden w-64 h-96 mx-auto flex flex-col"
-      onClick={() => router.push(`/dashboard/vueDetails/serieDetails/${id}`)}
+      onClick={() => router.push(`/vueDetails/serieDetails/${id}`)}
     >
       <img
         src={`https://image.tmdb.org/t/p/w300${series.poster_path}`}
