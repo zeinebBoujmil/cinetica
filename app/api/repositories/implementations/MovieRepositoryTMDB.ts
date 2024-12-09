@@ -1,5 +1,5 @@
-import { Movie } from '@/app/entities/Movie';
 import { MovieRepository } from '../interfaces/MovieRepository';
+import { Movie } from '@/app/entities/Movie';
 
 export class MovieRepositoryTMDB implements MovieRepository {
   private baseUrl = 'https://api.themoviedb.org/3';
@@ -27,5 +27,10 @@ export class MovieRepositoryTMDB implements MovieRepository {
 
   async getTopRated(): Promise<Movie[]> {
     return this.fetchMovies('/movie/top_rated');
+  }
+
+  // Nouvelle méthode pour récupérer les films via l'endpoint "discover"
+  async discoverMovies(): Promise<Movie[]> {
+    return this.fetchMovies('/discover/movie');
   }
 }

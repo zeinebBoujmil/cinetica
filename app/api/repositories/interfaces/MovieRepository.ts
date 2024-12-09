@@ -4,4 +4,5 @@ export interface MovieRepository {
   getNowPlaying(): Promise<Movie[]>;
   getPopular(): Promise<Movie[]>;
   getTopRated(): Promise<Movie[]>;
+  discoverMovies(): Promise<Movie[]>; // Nouvelle méthode pour découvrir les films
 }
