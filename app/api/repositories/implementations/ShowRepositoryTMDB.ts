@@ -5,7 +5,7 @@ export class ShowRepositoryTMDB implements ShowRepository {
   private baseUrl = 'https://api.themoviedb.org/3';
   private apiKey = process.env.TMDB_API_KEY;
 
-  private async fetchMovies(endpoint: string): Promise<TVShow[]> {
+  private async fetchShows(endpoint: string): Promise<TVShow[]> {
     const url = `${this.baseUrl}${endpoint}?api_key=${this.apiKey}&language=en-US&page=1`;
 
     const response = await fetch(url);
@@ -18,14 +18,19 @@ export class ShowRepositoryTMDB implements ShowRepository {
   }
 
   async getOnTheAir(): Promise<TVShow[]> {
-    return this.fetchMovies('/tv/on_the_air');
+    return this.fetchShows('/tv/on_the_air');
   }
 
   async getPopular(): Promise<TVShow[]> {
-    return this.fetchMovies('/tv/popular');
+    return this.fetchShows('/tv/popular');
   }
 
   async getTopRated(): Promise<TVShow[]> {
-    return this.fetchMovies('/tv/top_rated');
+    return this.fetchShows('/tv/top_rated');
+  }
+
+  // Nouvelle méthode pour récupérer des séries via l'endpoint "discover"
+  async discoverShows(): Promise<TVShow[]> {
+    return this.fetchShows('/discover/tv');
   }
 }
