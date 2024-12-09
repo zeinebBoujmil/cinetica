@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Movie } from '@/app/entities/Movie';
 import { useSearch } from '../../contexts/searchContext';
-import MovieCard from '../../cards/filmCard';
+import MovieCard from '../../cards/filmCard/filmCard';
 
 const FavoritesFilms = () => {
   const [favorites, setFavorites] = useState<Movie[]>([]);
@@ -18,6 +18,7 @@ const FavoritesFilms = () => {
   // Effet pour gérer les favoris
   useEffect(() => {
     if (!currentUser) return;
+    console.log(localStorage);
 
     const storedFavorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');
     const filteredFavorites = query

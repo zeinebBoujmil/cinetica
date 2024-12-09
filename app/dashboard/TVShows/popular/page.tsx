@@ -2,7 +2,7 @@
 
 import { useFetchPopularShows } from "../../TVShows/popular/useCase/useFetchPopularShows"
 import Loading from "@/app/Loading";
-import ShowCard from "../../cards/showCard";
+import ShowCard from "../../cards/showCard/showCard";
 import { useSearch } from "../../contexts/searchContext";
 
 export default function Popular() {
