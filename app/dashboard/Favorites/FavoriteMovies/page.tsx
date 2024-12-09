@@ -1,34 +1,10 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { Movie } from '@/app/entities/Movie';
-import { useSearch } from '../../contexts/searchContext';
+import React from 'react';
 import MovieCard from '../../cards/filmCard/filmCard';
+import { useFetchFavoriteMovies } from './useCase/useFetchFavoriteMovies';
 
 const FavoritesFilms = () => {
-  const [favorites, setFavorites] = useState<Movie[]>([]);
-  const [currentUser, setCurrentUser] = useState<string | null>(null);
-  const { query } = useSearch();
-
-  // Effet pour récupérer l'utilisateur courant
-  useEffect(() => {
-    const user = localStorage.getItem('currentUser');
-    setCurrentUser(user);
-  }, []);
-
-  // Effet pour gérer les favoris
-  useEffect(() => {
-    if (!currentUser) return;
-    console.log(localStorage);
-
-    const storedFavorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');
-    const filteredFavorites = query
-      ? storedFavorites.filter((movie: Movie) =>
-        movie.title.toLowerCase().includes(query.toLowerCase())
-      )
-      : storedFavorites;
-
-    setFavorites(filteredFavorites);
-  }, [query, currentUser]);
+  const { favorites, currentUser } = useFetchFavoriteMovies();
 
   // Rendu conditionnel si pas d'utilisateur
   if (!currentUser) {
@@ -44,13 +20,12 @@ const FavoritesFilms = () => {
       <h1 className="text-3xl font-extrabold mb-6 text-center relative">
         Vos Films Favorites
         <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
-      </h1>      {favorites.length > 0 ? (
+      </h1>
+      {favorites.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {favorites.map((movie) => (
             <div key={movie.id} className="flex justify-center">
-              <MovieCard
-                id={movie.id}
-              />
+              <MovieCard id={movie.id} />
             </div>
           ))}
         </div>
@@ -59,7 +34,6 @@ const FavoritesFilms = () => {
           <p className="text-lg text-gray-400">Aucun film n a été ajouté aux favoris.</p>
         </div>
       )}
-
     </div>
   );
 };
