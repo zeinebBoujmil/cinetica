@@ -8,6 +8,7 @@ export async function GET() {
   
       return new Response(JSON.stringify(shows), { status: 200 });
     } catch (error) {
+      console.log(error);
       return new Response(JSON.stringify({ error: "Échec de la récupération des films populaires" }), { status: 500 });
     }
   }
