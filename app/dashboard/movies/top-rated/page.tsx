@@ -2,7 +2,7 @@
 
 import { useFetchTopRatedMovies } from "./useCase/useFetchTopRatedMovies"; // Import du hook
 import Loading from "@/app/Loading";
-import MovieCard from "../../cards/filmCard";
+import MovieCard from "../../cards/filmCard/filmCard";
 import { useSearch } from "../../contexts/searchContext";
 
 export default function TopRated() {

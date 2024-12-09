@@ -2,7 +2,7 @@
 
 import { useFetchOnTheAirShows } from "./useCase/useFetchOnTheAirShows";
 import Loading from "@/app/Loading";
-import ShowCard from "../../cards/showCard";
+import ShowCard from "../../cards/showCard/showCard";
 import { useSearch } from "../../contexts/searchContext";
 
 export default function OnTheAir() {

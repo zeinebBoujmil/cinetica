@@ -45,4 +45,17 @@ export class ShowRepositoryTMDB implements ShowRepository {
       throw error;
     }
   }
+  async getShowById(id: number): Promise<TVShow> {
+    try {
+      const response = await fetch(`${this.apiUrl}/${id}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch show details: ${response.statusText}`);
+      }
+      const data = await response.json();
+      return data as TVShow;
+    } catch (error) {
+      console.error("Error in getShowById:", error);
+      throw error;
+    }
+  }
 }

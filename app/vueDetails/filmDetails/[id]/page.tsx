@@ -14,7 +14,7 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
 
   const handleBack = () => {
-    router.back(); // Retourne à la page précédente
+    router.back(); 
   };
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
     {/* Bouton de retour */}
     <button
       onClick={handleBack}
-      className="absolute top-4 left-4 z-20 font-semibold py-2 px-4 rounded-md shadow-md transition duration-200 bg-blue-500 hover:bg-blue-600 text-white dark:bg-gray-700 dark:hover:bg-gray-800"
+      className="absolute top-4 left-4 z-20 font-semibold py-2 px-4 rounded-md shadow-md transition duration-200 "
     >
       Retour
     </button>

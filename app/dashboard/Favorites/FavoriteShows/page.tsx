@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { TVShow } from '@/app/entities/TVShow';
 import { useSearch } from '../../contexts/searchContext';
-import ShowCard from '../../cards/showCard';
+import ShowCard from '../../cards/showCard/showCard';
 
 const FavoritesSeries = () => {
   const [favoritesSeries, setFavorites] = useState<TVShow[]>([]); 

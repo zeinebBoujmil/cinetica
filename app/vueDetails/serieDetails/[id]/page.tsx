@@ -4,15 +4,19 @@ import { useState, useEffect } from "react";
 import { ShowCredits } from "@/app/entities/ShowCredits";
 import Loading from "@/app/Loading";
 import { TVShow } from "@/app/entities/TVShow";
+import { useRouter } from "next/navigation";
 
 const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
   const [series, setSeries] = useState<TVShow | null>(null);
   const [credits, setCredits] = useState<ShowCredits[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const router = useRouter();
 
   console.log("Series ID:", params.id);
-
+  const handleBack = () => {
+    router.back(); 
+  };
   // Récupération des détails de la série
   useEffect(() => {
     const fetchSeriesDetails = async () => {
@@ -59,7 +63,14 @@ const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
           backgroundImage: `url(https://image.tmdb.org/t/p/w500${series.backdrop_path})`,
         }}
       ></div>
-
+ <button
+      onClick={handleBack}
+      className="absolute top-4 left-4 z-20 font-semibold py-2 px-4 rounded-md shadow-md transition duration-200 "
+    >
+      Retour
+    </button>
+    <br/>
+    <br/>
       {/* Contenu principal */}
       <div className="relative z-10 flex flex-col lg:flex-row items-start p-8 lg:p-16">
         {/* Image */}

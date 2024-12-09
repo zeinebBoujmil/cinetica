@@ -6,11 +6,10 @@ const discoverRepository = new DiscoverRepositoryImpl();
 
 export const useFetchDiscover = (query: string) => {
   return useQuery({
-    queryKey: ['discoverData', query], // Inclut `query` comme dépendance
+    queryKey: ['discoverData', query], 
     queryFn: async () => {
       const data = await discoverRepository.getDiscoverData();
 
-      // Appliquer le filtrage ici
       const filteredMovies = query
         ? data.films.filter((movie) =>
             movie.title.toLowerCase().includes(query.toLowerCase())

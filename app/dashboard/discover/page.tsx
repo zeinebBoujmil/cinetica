@@ -2,48 +2,49 @@
 
 import { useFetchDiscover } from "../discover/useCase/useFetchDiscover"
 import Loading from "@/app/Loading";
-import MovieCard from "../cards/filmCard";
-import ShowCard from "../cards/showCard";
+import MovieCard from "../cards/filmCard/filmCard";
+import ShowCard from "../cards/showCard/showCard";
 import { useSearch } from "../contexts/searchContext";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function Discover() {
-  const { query } = useSearch();
-  const { data, isLoading, error } = useFetchDiscover(query);
+    const { query } = useSearch();
+    const { data, isLoading, error } = useFetchDiscover(query);
 
-  if (isLoading) return <Loading />;
-  if (error) return <div>Erreur lors de la récupération des données</div>;
+    if (isLoading) return <Loading />;
+    if (error) return <div>Erreur lors de la récupération des données</div>;
 
-  return (
-    <>
-      <br />
-      <br />
-      <h1 className="text-3xl font-extrabold mb-6 text-center relative">
-        Films <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
-      </h1>
-      <ScrollArea className="w-screen whitespace-nowrap rounded-md ">
-        <div className="flex w-max space-x-4 p-4">
-          {data?.films.map((movie) => (
-            <div key={movie.id} className="shrink-0">
-              <MovieCard key={movie.id} id={movie.id} />
-            </div>
-          ))}
+    return (
+
+        <div >
+            <br />
+            <br />
+            <h1 className="text-3xl font-extrabold mb-6 text-center relative">
+                Films <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
+            </h1>
+            <ScrollArea className="w-screen whitespace-nowrap rounded-md ">
+                <div className="flex w-max space-x-4 p-4">
+                    {data?.films.map((movie) => (
+                        <div key={movie.id} className="shrink-0">
+                            <MovieCard key={movie.id} id={movie.id} />
+                        </div>
+                    ))}
+                </div>
+                <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+            <h1 className="text-3xl font-extrabold mb-6 text-center relative">
+                Shows <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
+            </h1>
+            <ScrollArea className="w-screen whitespace-nowrap rounded-md ">
+                <div className="flex w-max space-x-4 p-4">
+                    {data?.series.map((serie) => (
+                        <div key={serie.id} className="shrink-0">
+                            <ShowCard key={serie.id} id={serie.id} />
+                        </div>
+                    ))}
+                </div>
+                <ScrollBar orientation="horizontal" />
+            </ScrollArea>
         </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
-      <h1 className="text-3xl font-extrabold mb-6 text-center relative">
-        Shows <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
-      </h1>
-      <ScrollArea className="w-screen whitespace-nowrap rounded-md ">
-        <div className="flex w-max space-x-4 p-4">
-          {data?.series.map((serie) => (
-            <div key={serie.id} className="shrink-0">
-              <ShowCard key={serie.id} id={serie.id} />
-            </div>
-          ))}
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
-    </>
-  );
+    );
 }
