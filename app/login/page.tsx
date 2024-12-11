@@ -1,5 +1,6 @@
 'use client';
 import { useLogin } from "./useCase/useLogin";
+import { signIn } from "next-auth/react";
 import "/app/globals.css";
 
 export default function Login() {
@@ -73,6 +74,20 @@ export default function Login() {
           </button>
         </form>
 
+{/* Bouton pour se connecter avec Google */}
+<button
+  onClick={() => signIn("google")}
+  className="mt-4 w-full flex items-center justify-center border border-gray-300 text-gray-600 py-2 rounded-lg font-semibold hover:bg-gray-100 transition duration-200"
+>
+  <img
+    src="/images/image.png"
+    alt="Google logo"
+    className="w-5 h-5 mr-2"
+  />
+  Log In with Google
+</button>
+
+
         <button
           onClick={goToSignUp}
           className="mt-4 w-full bg-white text-[#0A2540] py-2 rounded-lg font-semibold hover:bg-[#0A2540] hover:text-white transition duration-200"
@@ -85,7 +100,7 @@ export default function Login() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-3xl font-bold mb-4">{errMsg}</h2>
-            <p>Nom d utilisateur ou mot de passe incorrect.</p>
+            <p>Nom d'utilisateur ou mot de passe incorrect.</p>
           </div>
         </div>
       )}
@@ -93,7 +108,7 @@ export default function Login() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-3xl font-bold mb-4">{welcomeMessage}</h2>
-            <p>Redirection vers votre page d accueil Cinetica...</p>
+            <p>Redirection vers votre page d'accueil Cinetica...</p>
           </div>
         </div>
       )}

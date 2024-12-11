@@ -9,14 +9,12 @@ export const users = [
 
 
 export function addUser(username:string, password:string) {
-    // Vérifie si l'utilisateur existe déjà
     const userExists = users.some(user => user.username === username);
 
     if (userExists) {
-        throw new Error("L'utilisateur existe déjà."); // Lève une erreur si l'utilisateur existe
+        throw new Error("L'utilisateur existe déjà."); 
     }
 
-    // Ajoute le nouvel utilisateur
     users.push({ username, password });
     return { success: true, message: "Utilisateur ajouté avec succès." };
 }

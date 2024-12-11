@@ -1,11 +1,19 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { users } from "@/app/Repository/users";
 
 // Configuration des options d'authentification
 const authOptions = {
   providers: [
+    // Google OAuth Provider
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+
+    // Credentials Provider (Nom d'utilisateur et mot de passe)
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -34,6 +42,24 @@ const authOptions = {
     strategy: "jwt",
   },
   callbacks: {
+    async signIn({ account, profile }) {
+      if (account.provider === "google") {
+        const email = profile.email;
+
+        // Vérifiez si l'utilisateur existe dans le tableau users
+        const userExists = users.some((user) => user.username === email);
+
+        // Si l'utilisateur n'existe pas, ajoutez-le automatiquement
+        if (!userExists) {
+          users.push({
+            username: email,
+            password: null, // Pas de mot de passe pour Google
+          });
+          console.log(`Nouvel utilisateur ajouté via Google : ${email}`);
+        }
+      }
+      return true; // Autorise la connexion
+    },
     async jwt({ token, user }) {
       if (user) {
         token.username = user.username;
@@ -59,4 +85,3 @@ export const GET = async (req, res) => {
 export const POST = async (req, res) => {
   return NextAuth(req, res, authOptions);
 };
-

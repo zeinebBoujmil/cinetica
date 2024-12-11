@@ -62,7 +62,10 @@ export default function Signup() {
         </div>
       </div>
     );
-
+    
+  const goToLogin = () => {
+    router.push("/login");
+  };
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gray-800">
       {/* Image de fond */}
@@ -136,6 +139,12 @@ export default function Signup() {
           >
             Sign Up
           </button>
+          <button
+          onClick={goToLogin}
+          className="mt-4 w-full bg-white text-[#0A2540] py-2 rounded-lg font-semibold hover:bg-[#0A2540] hover:text-white transition duration-200"
+        >
+          Login
+        </button>
         </form>
       </div>
     </div>
