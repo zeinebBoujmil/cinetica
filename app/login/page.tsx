@@ -100,7 +100,7 @@ export default function Login() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-3xl font-bold mb-4">{errMsg}</h2>
-            <p>Nom d'utilisateur ou mot de passe incorrect.</p>
+            <p>Nom d utilisateur ou mot de passe incorrect.</p>
           </div>
         </div>
       )}
@@ -108,7 +108,7 @@ export default function Login() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-3xl font-bold mb-4">{welcomeMessage}</h2>
-            <p>Redirection vers votre page d'accueil Cinetica...</p>
+            <p>Redirection vers votre page d accueil Cinetica...</p>
           </div>
         </div>
       )}
