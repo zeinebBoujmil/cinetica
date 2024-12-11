@@ -15,6 +15,7 @@ export function addUser(username:string, password:string) {
         throw new Error("L'utilisateur existe déjà."); 
     }
 
+    
     users.push({ username, password });
     return { success: true, message: "Utilisateur ajouté avec succès." };
 }
