@@ -1,7 +1,7 @@
 "use client";
 
 import { ModeToggle } from '../ModeToggle';
-import { useSearch } from '../contexts/searchContext';
+import { useSearch } from '../../contexts/searchContext';
 
 
 

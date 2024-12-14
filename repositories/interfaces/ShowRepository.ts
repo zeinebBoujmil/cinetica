@@ -1,4 +1,5 @@
 // repositories/interfaces/ShowRepository.ts
+import { ShowCredits } from "@/app/entities/ShowCredits";
 import { TVShow } from "@/app/entities/TVShow";
 
 export interface ShowRepository {
@@ -6,4 +7,6 @@ export interface ShowRepository {
   getTopRated(): Promise<TVShow[]>; // Récupérer les séries les mieux notées
   getPopular(): Promise<TVShow[]>; // Récupérer les séries populaires
   getShowById(id: number): Promise<TVShow>; // Récupérer les détails d'une série par ID
+  getShowCredits(id: string): Promise<ShowCredits[]>;
+
 }

@@ -1,53 +1,14 @@
 'use client';
 
-import { useState, useEffect } from "react";
-import { ShowCredits } from "@/app/entities/ShowCredits";
-import Loading from "@/app/Loading";
-import { TVShow } from "@/app/entities/TVShow";
-import { useRouter } from "next/navigation";
+import React from "react";
+import { useFetchShowsCredits } from "../useCase/useFetchShowsCredits"
+import { formatDate } from "@/app/utils/dateFormatter";
 
 const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
-  const [series, setSeries] = useState<TVShow | null>(null);
-  const [credits, setCredits] = useState<ShowCredits[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const router = useRouter();
-
-  console.log("Series ID:", params.id);
-  const handleBack = () => {
-    router.back(); 
-  };
-  // Récupération des détails de la série
-  useEffect(() => {
-    const fetchSeriesDetails = async () => {
-      try {
-        const seriesResponse = await fetch(`/api/shows/${params.id}`);
-        const creditsResponse = await fetch(`/api/shows/${params.id}/credits`);
-
-        if (!seriesResponse.ok || !creditsResponse.ok) {
-          throw new Error("Failed to fetch series details or credits.");
-        }
-
-        const seriesData = await seriesResponse.json();
-        const creditsData = await creditsResponse.json();
-        console.log("Series details:", seriesData);
-        console.log("Actors:", creditsData);
-
-        setSeries(seriesData);
-        setCredits(creditsData);
-        setLoading(false);
-      } catch (err) {
-        console.error(err);
-        setError("Une erreur s est produite lors du chargement des données.");
-        setLoading(false);
-      }
-    };
-
-    fetchSeriesDetails();
-  }, [params.id]);
+  const { series, credits, loading, error, handleBack } = useFetchShowsCredits(params.id);
 
   if (loading) {
-    return <Loading />;
+    return <div className="text-center text-red-500">loading ...</div>;
   }
 
   if (error || !series) {
@@ -56,24 +17,21 @@ const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="relative min-h-screen bg-gray-900 text-white">
-      {/* Arrière-plan flou */}
       <div
         className="absolute inset-0 bg-cover bg-center filter blur-md opacity-50"
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/w500${series.backdrop_path})`,
         }}
       ></div>
- <button
-      onClick={handleBack}
-      className="absolute top-4 left-4 z-20 font-semibold py-2 px-4 rounded-md shadow-md transition duration-200 "
-    >
-      Retour
-    </button>
-    <br/>
-    <br/>
-      {/* Contenu principal */}
+      <button
+        onClick={handleBack}
+        className="absolute top-4 left-4 z-20 font-semibold py-2 px-4 rounded-md shadow-md transition duration-200"
+      >
+        Retour
+      </button>
+      <br />
+      <br />
       <div className="relative z-10 flex flex-col lg:flex-row items-start p-8 lg:p-16">
-        {/* Image */}
         <div className="flex-shrink-0 w-full lg:w-1/3">
           <img
             src={`https://image.tmdb.org/t/p/w500${series.poster_path}`}
@@ -82,17 +40,15 @@ const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
           />
         </div>
 
-        {/* Informations */}
         <div className="mt-8 lg:mt-0 lg:ml-16 flex-1">
           <h1 className="text-4xl font-bold mb-4">{series.name}</h1>
           <p className="text-sm text-gray-300 italic mb-4">{series.original_name}</p>
           <p className="text-lg">{series.overview}</p>
 
-          {/* Informations supplémentaires */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
             <div>
               <h3 className="text-gray-400 text-sm">Date de première diffusion</h3>
-              <p>{series.first_air_date}</p>
+              <p>{formatDate(series.first_air_date)}</p>
             </div>
             <div>
               <h3 className="text-gray-400 text-sm">Langue originale</h3>
@@ -100,14 +56,14 @@ const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
             </div>
             <div>
               <h3 className="text-gray-400 text-sm">Popularité</h3>
-              <p>{series.popularity.toFixed(1)} / 100</p>
+              <p>{series.popularity.toFixed(1)}</p>
             </div>
             <div>
               <h3 className="text-gray-400 text-sm">Nombre de votes</h3>
               <p>{series.vote_count}</p>
             </div>
             <div>
-              <h3 className="text-gray-400 text-sm">Pays d origine</h3>
+              <h3 className="text-gray-400 text-sm">Pays d'origine</h3>
               <p>{series.origin_country}</p>
             </div>
           </div>

@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             enableSystem
             disableTransitionOnChange
           >
-            <div className="overflow-x-hidden ">
+            <div className="relative overflow-x-hidden">
             {children}
             </div>
           </ThemeProvider>

@@ -3,7 +3,7 @@
 import { useFetchTopRatedShows } from "../top-rated/useCase/useFetchTopRatedShows"
 import Loading from "@/app/Loading";
 import ShowCard from "../../cards/showCard/showCard";
-import { useSearch } from "../../contexts/searchContext";
+import { useSearch } from "../../../contexts/searchContext";
 
 export default function TopRatedSeries() {
   const { query } = useSearch();
@@ -18,7 +18,7 @@ export default function TopRatedSeries() {
         Top Rated Shows
         <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
       </h1>
-      <div className="flex flex-wrap justify-center gap-2">
+      <div className="flex flex-wrap justify-center gap-2 gap-y-4">
         {filteredSeries?.map((serie) => (
           <ShowCard key={serie.id} id={serie.id} />
         ))}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Movie } from '@/app/entities/Movie';
-import { useSearch } from '@/app/dashboard/contexts/searchContext';
+import { useSearch } from '@/app/contexts/searchContext';
 export const useFetchFavoriteMovies = () => {
   const [favorites, setFavorites] = useState<Movie[]>([]);
   const [currentUser, setCurrentUser] = useState<string | null>(null);

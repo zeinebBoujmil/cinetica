@@ -1,5 +1,6 @@
 import { Movie } from "@/app/entities/Movie";
 import { MovieRepository } from "../interfaces/MovieRepository";
+import { MovieCredits } from "@/app/entities/MovieCredits";
 
 const API_BASE_URL = "/api/movies"; // Base URL pour les films
 
@@ -55,6 +56,19 @@ export class MovieRepositoryTMDB implements MovieRepository {
       return data as Movie;
     } catch (error) {
       console.error("Error in getFilmById:", error);
+      throw error;
+    }
+  }
+  async getCreditsByMovieId(id: number): Promise<MovieCredits[]> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/${id}/credits`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch credits for movie ${id}: ${response.statusText}`);
+      }
+      const data = await response.json();
+      return data.cast as MovieCredits[];
+    } catch (error) {
+      console.error("Error in getCreditsByMovieId:", error);
       throw error;
     }
   }

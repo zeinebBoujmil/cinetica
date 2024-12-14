@@ -3,7 +3,8 @@
 import React from 'react';
 import { useFetchMovieById  } from "../filmCard/useCase/useFetchMovieById";
 import { Star } from 'lucide-react';
-
+import { formatDate } from "@/app/utils/dateFormatter"
+import Loading from '@/app/Loading';
 interface FilmCardProps {
   id: number;
 }
@@ -12,11 +13,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
   const { movie, isLoading, error, isFavorite, toggleFavorite, handleCardClick } = useFetchMovieById(id);
 
   if (isLoading) {
-    return (
-      <div className="w-64 h-96 mx-auto flex items-center justify-center text-gray-400">
-        Chargement...
-      </div>
-    );
+    return ;
   }
 
   if (error || !movie) {
@@ -29,7 +26,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
 
   return (
     <div
-      className="hover:scale-105 transition-transform duration-300 hover:shadow-lg hover:shadow-gray-500/50 rounded-lg overflow-hidden w-64 h-96 mx-auto flex flex-col"
+      className="hover:scale-105 transition-transform duration-300 hover:shadow-lg hover:shadow-gray-500/50 rounded-lg overflow-hidden w-64 h-96 mx-auto flex flex-col "
       onClick={handleCardClick}
     >
       <img
@@ -40,11 +37,8 @@ const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
       <div className="p-4 flex-1 flex flex-col justify-between">
         <h3 className="text-lg font-semibold">{movie.title}</h3>
         <div className="flex items-center justify-between">
-          <p className="text-sm">
-            {movie.release_date
-              ? movie.release_date.split('-').reverse().join('-')
-              : 'Inconnue'}
-          </p>
+        <p className="text-sm">{formatDate(movie.release_date)}</p>
+
           <div className="relative flex items-center justify-center w-8 h-8 ml-2">
             <div className="absolute w-full h-full rounded-full border-2 border-gray-300"></div>
             <div

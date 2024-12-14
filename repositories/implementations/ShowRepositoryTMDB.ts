@@ -1,3 +1,4 @@
+import { ShowCredits } from "@/app/entities/ShowCredits";
 import { ShowRepository } from "../interfaces/ShowRepository";
 import { TVShow } from "@/app/entities/TVShow";
 
@@ -55,6 +56,19 @@ export class ShowRepositoryTMDB implements ShowRepository {
       return data as TVShow;
     } catch (error) {
       console.error("Error in getShowById:", error);
+      throw error;
+    }
+  }
+  async getShowCredits(id: string): Promise<ShowCredits[]> {
+    try {
+      const response = await fetch(`${this.apiUrl}/${id}/credits`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch show credits: ${response.statusText}`);
+      }
+      const data = await response.json();
+      return data as ShowCredits[];
+    } catch (error) {
+      console.error("Error in getShowCredits:", error);
       throw error;
     }
   }

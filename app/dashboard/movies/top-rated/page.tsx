@@ -3,7 +3,7 @@
 import { useFetchTopRatedMovies } from "./useCase/useFetchTopRatedMovies"; // Import du hook
 import Loading from "@/app/Loading";
 import MovieCard from "../../cards/filmCard/filmCard";
-import { useSearch } from "../../contexts/searchContext";
+import { useSearch } from "../../../contexts/searchContext";
 
 export default function TopRated() {
   const { query } = useSearch(); // Utiliser la recherche
@@ -23,7 +23,7 @@ export default function TopRated() {
       Top Rated Films
       <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
       </h1>
-      <div className="flex flex-wrap justify-center gap-2">
+      <div className="flex flex-wrap justify-center gap-2 gap-y-4">
       {filteredMovies?.map((movie) => (
           <MovieCard key={movie.id} id={movie.id} />
         ))}

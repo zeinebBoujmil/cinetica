@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TVShow } from '@/app/entities/TVShow';
-import { useSearch } from '@/app/dashboard/contexts/searchContext';
+import { useSearch } from '@/app/contexts/searchContext';
 
 export const useFetchFavoriteShows = () => {
   const [favoritesSeries, setFavorites] = useState<TVShow[]>([]);

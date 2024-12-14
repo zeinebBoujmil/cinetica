@@ -3,6 +3,8 @@
 import React from 'react';
 import { useFetchShowById } from './useCase/useFetchShowsById';
 import { Star } from 'lucide-react';
+import { formatDate } from "@/app/utils/dateFormatter"
+import Loading from '@/app/Loading';
 
 interface ShowCardProps {
   id: number;
@@ -12,11 +14,7 @@ const ShowCard: React.FC<ShowCardProps> = ({ id }) => {
   const { series, isLoading, error, isFavorite, toggleFavorite, handleCardClick } = useFetchShowById(id);
 
   if (isLoading) {
-    return (
-      <div className="w-64 h-96 mx-auto flex items-center justify-center text-gray-400">
-        Chargement...
-      </div>
-    );
+    return ;
   }
 
   if (error || !series) {
@@ -39,11 +37,8 @@ const ShowCard: React.FC<ShowCardProps> = ({ id }) => {
       />
       <div className="p-4 flex-1 flex flex-col justify-between">
         <h3 className="text-lg font-semibold">{series.name}</h3>
-        <p className="text-sm">
-          {series.first_air_date
-            ? series.first_air_date.split('-').reverse().join('-')
-            : 'Inconnue'}
-        </p>
+        <p className="text-sm">{formatDate(series.first_air_date)}</p>
+
       </div>
 
       <button
