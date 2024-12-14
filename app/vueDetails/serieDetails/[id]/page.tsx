@@ -63,7 +63,7 @@ const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
               <p>{series.vote_count}</p>
             </div>
             <div>
-              <h3 className="text-gray-400 text-sm">Pays d'origine</h3>
+              <h3 className="text-gray-400 text-sm">Pays d origine</h3>
               <p>{series.origin_country}</p>
             </div>
           </div>

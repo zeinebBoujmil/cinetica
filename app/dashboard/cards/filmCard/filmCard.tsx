@@ -4,7 +4,6 @@ import React from 'react';
 import { useFetchMovieById  } from "../filmCard/useCase/useFetchMovieById";
 import { Star } from 'lucide-react';
 import { formatDate } from "@/app/utils/dateFormatter"
-import Loading from '@/app/Loading';
 interface FilmCardProps {
   id: number;
 }

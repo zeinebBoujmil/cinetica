@@ -4,7 +4,6 @@ import React from 'react';
 import { useFetchShowById } from './useCase/useFetchShowsById';
 import { Star } from 'lucide-react';
 import { formatDate } from "@/app/utils/dateFormatter"
-import Loading from '@/app/Loading';
 
 interface ShowCardProps {
   id: number;
