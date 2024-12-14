@@ -3,7 +3,6 @@
 
 import React from "react";
 import { useFetchMovieCredits } from "../useCase/useFetchMovieCredits" ;
-import Loading from "@/app/Loading";
 import { formatDate } from "@/app/utils/dateFormatter";
 
 const MovieDetails = ({ params }: { params: { id: string } }) => {
