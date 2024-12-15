@@ -13,7 +13,7 @@ export default function Popular() {
   if (error) return <div>Erreur lors de la récupération des films populaires</div>;
 
   return (
-    <div className="flex flex-col container mx-auto px-4 py-8">
+    <div data-testid="popular-page" className="flex flex-col container mx-auto px-4 py-8">
       <h1 className="text-3xl font-extrabold mb-6 text-center relative">
       Popular Films
       <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>

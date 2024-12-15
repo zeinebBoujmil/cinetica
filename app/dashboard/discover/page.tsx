@@ -12,8 +12,8 @@ import { useIsMobile } from "@/hooks/use-mobile";
 export default function Discover() {
     const { query } = useSearch();
     const { data, isLoading, error } = useFetchDiscover(query);
-    const { state } = useSidebar(); // Utilisation du hook pour basculer la sidebar et accéder à son état
-    const isMobile = useIsMobile(); // Utilisation du hook pour détecter si l'utilisateur est en version mobile
+    const { state } = useSidebar(); 
+    const isMobile = useIsMobile(); 
 
     if (error) return <div>Erreur lors de la récupération des données</div>;
 

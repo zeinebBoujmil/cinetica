@@ -25,6 +25,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
 
   return (
     <div
+      data-testid="movie-card"
       className="hover:scale-105 transition-transform duration-300 hover:shadow-lg hover:shadow-gray-500/50 rounded-lg overflow-hidden w-64 h-96 mx-auto flex flex-col "
       onClick={handleCardClick}
     >
@@ -33,8 +34,8 @@ const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
         alt={movie.title}
         className="w-full h-2/3 object-cover"
       />
-      <div className="p-4 flex-1 flex flex-col justify-between">
-        <h3 className="text-lg font-semibold">{movie.title}</h3>
+      <div className="p-4 flex-1 flex flex-col justify-between filmCard">
+        <h3 data-testid="movie-title" className="text-lg font-semibold">{movie.title}</h3>
         <div className="flex items-center justify-between">
         <p className="text-sm">{formatDate(movie.release_date)}</p>
 
