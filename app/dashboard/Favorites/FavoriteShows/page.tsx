@@ -6,13 +6,9 @@ import { useFetchFavoriteShows } from './useCase/useFetchFavoriteShows';
 const FavoritesSeries = () => {
   const { favoritesSeries, currentUser } = useFetchFavoriteShows();
 
-  // Rendu conditionnel si pas d'utilisateur
+
   if (!currentUser) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <p className="text-lg text-gray-400">Veuillez vous connecter pour voir vos séries favorites.</p>
-      </div>
-    );
+    return;
   }
 
   return (

@@ -5,10 +5,10 @@ const tvShowRepository = new ShowRepositoryTMDB();
 
 export const useFetchTopRatedShows = (query: string) => {
   return useQuery({
-    queryKey: ["topRatedShows", query], // Inclure `query` dans la clé du cache
+    queryKey: ["topRatedShows", query], 
     queryFn: async () => {
       const shows = await tvShowRepository.getTopRated();
-      // Appliquer le filtre dans le useCase
+
       if (query) {
         return shows.filter((show) =>
           show.name.toLowerCase().includes(query.toLowerCase())

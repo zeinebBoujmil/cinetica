@@ -10,7 +10,7 @@ export default function Popular() {
   const { data, isLoading, error } = useFetchPopularMovies(query);
 
   if (isLoading) return <Loading />;
-  if (error) return <div>Erreur lors de la récupération des films populaires</div>;
+  if (error) return;
 
   return (
     <div data-testid="popular-page" className="flex flex-col container mx-auto px-4 py-8">

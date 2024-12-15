@@ -1,18 +1,24 @@
 'use client';
 
-import React from "react";
+import React, { useState } from "react";
 import { useFetchShowsCredits } from "../useCase/useFetchShowsCredits"
 import { formatDate } from "@/app/utils/dateFormatter";
 
 const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
   const { series, credits, loading, error, handleBack } = useFetchShowsCredits(params.id);
 
+  const [visibleActors, setVisibleActors] = useState(8); 
+
+  const loadMoreActors = () => {
+    setVisibleActors((prev) => prev + 8); 
+  };
+
   if (loading) {
-    return <div className="text-center text-red-500">loading ...</div>;
+    return;
   }
 
   if (error || !series) {
-    return <div className="text-center text-red-500">{error || "Série introuvable."}</div>;
+    return;
   }
 
   return (
@@ -68,11 +74,11 @@ const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
             </div>
           </div>
 
-          {/* Liste des acteurs */}
+
           <div className="mt-12">
             <h2 className="text-2xl font-bold mb-4">Acteurs</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {credits?.map((actor) => (
+              {credits && credits.slice(0, visibleActors).map((actor) => (
                 <div key={actor.id} className="flex flex-col items-center">
                   <img
                     src={
@@ -89,6 +95,18 @@ const SeriesDetailsPage = ({ params }: { params: { id: string } }) => {
                   </p>
                 </div>
               ))}
+              {credits && visibleActors < credits.length && (
+                <div className="col-span-full text-center mt-4">
+                  <button
+                    onClick={loadMoreActors}
+                    className="font-semibold py-2 px-4 rounded"
+
+                  >
+                    Charger plus
+                  </button>
+                </div>
+              )}
+
             </div>
           </div>
         </div>

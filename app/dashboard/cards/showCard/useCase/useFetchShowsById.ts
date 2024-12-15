@@ -8,7 +8,7 @@ const showRepository = new ShowRepositoryTMDB();
 
 export const useFetchShowById = (id: number) => {
   const router = useRouter();
-  const [isFavorite, setIsFavorite] = useState(false); // État local pour les favoris
+  const [isFavorite, setIsFavorite] = useState(false); 
   const currentUser = localStorage.getItem("currentUser");
   const favoritesKey = `favoritesSeries_${currentUser}`;
 
@@ -19,7 +19,7 @@ export const useFetchShowById = (id: number) => {
     },
   });
 
-  // Effet pour synchroniser l'état `isFavorite` avec `localStorage`
+
   useEffect(() => {
     if (!series) return;
 
@@ -28,10 +28,10 @@ export const useFetchShowById = (id: number) => {
     ) as TVShow[];
 
     const favoriteStatus = storedFavorites.some((fav) => fav.id === id);
-    setIsFavorite(favoriteStatus); // Met à jour l'état local
+    setIsFavorite(favoriteStatus); 
   }, [series, favoritesKey, id]);
 
-  // Fonction pour ajouter ou retirer des favoris
+
   const toggleFavorite = () => {
     if (!currentUser) {
       console.error("Aucun utilisateur connecté.");
@@ -51,7 +51,7 @@ export const useFetchShowById = (id: number) => {
 
     if (updatedFavorites) {
       localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites));
-      setIsFavorite(!isFavorite); // Met à jour immédiatement l'état local
+      setIsFavorite(!isFavorite); 
     }
   };
 

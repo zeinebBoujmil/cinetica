@@ -29,7 +29,6 @@ export class MovieRepositoryTMDB implements MovieRepository {
     return this.fetchMovies('/movie/top_rated');
   }
 
-  // Nouvelle méthode pour récupérer les films via l'endpoint "discover"
   async discoverMovies(): Promise<Movie[]> {
     return this.fetchMovies('/discover/movie');
   }

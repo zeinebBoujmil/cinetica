@@ -16,11 +16,7 @@ const MovieCard: React.FC<FilmCardProps> = ({ id }) => {
   }
 
   if (error || !movie) {
-    return (
-      <div className="w-64 h-96 mx-auto flex items-center justify-center text-red-500">
-        Erreur lors de la récupération des données.
-      </div>
-    );
+    return ;
   }
 
   return (

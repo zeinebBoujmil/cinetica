@@ -5,11 +5,11 @@ const movieRepository = new MovieRepositoryTMDB();
 
 export const useFetchPopularMovies = (query: string) => {
   return useQuery({
-    queryKey: ['popularMovies', query], // Inclure `query` dans les dépendances
+    queryKey: ['popularMovies', query],
     queryFn: async () => {
       const movies = await movieRepository.getPopular();
       if (query) {
-        // Appliquer le filtre ici
+
         return movies.filter((movie) =>
           movie.title.toLowerCase().includes(query.toLowerCase())
         );

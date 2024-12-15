@@ -19,7 +19,7 @@ export default function Login() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gray-800">
-      {/* Image de fond */}
+
       <div className="absolute inset-0 z-0">
         <img
           src="/images/arrierePlan.jpg"
@@ -28,7 +28,7 @@ export default function Login() {
         />
       </div>
 
-      {/* Formulaire de connexion */}
+
       <div className="relative z-10 bg-white bg-opacity-90 p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
         <div className="flex justify-center mb-6">
           <img
@@ -76,7 +76,6 @@ export default function Login() {
           </button>
         </form>
 
-{/* Bouton pour se connecter avec Google */}
 <button
   onClick={() => signIn("google")}
   className="mt-4 w-full flex items-center justify-center border border-gray-300 text-gray-600 py-2 rounded-lg font-semibold hover:bg-gray-100 transition duration-200"

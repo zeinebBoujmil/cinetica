@@ -28,7 +28,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="pt-16"> {/* Ajout d'un padding en haut de 16 unités */}
+            <div className="pt-16"> 
               {children}
             </div>
             </ThemeProvider>

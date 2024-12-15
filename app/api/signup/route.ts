@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   const { username, password } = await request.json();
 
   try {
-    // Vérifie si l'utilisateur existe déjà
+
     const userExists = users.some((user) => user.username === username);
     if (userExists) {
       return NextResponse.json({
@@ -15,10 +15,10 @@ export async function POST(request: Request) {
       });
     }
 
-    // Hache le mot de passe
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Ajoute l'utilisateur
+
     const response = addUser(username, hashedPassword);
 
     return NextResponse.json(response);

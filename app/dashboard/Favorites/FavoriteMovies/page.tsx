@@ -6,13 +6,8 @@ import { useFetchFavoriteMovies } from './useCase/useFetchFavoriteMovies';
 const FavoritesFilms = () => {
   const { favorites, currentUser } = useFetchFavoriteMovies();
 
-  // Rendu conditionnel si pas d'utilisateur
   if (!currentUser) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <p className="text-lg text-gray-400">Veuillez vous connecter pour voir vos favoris.</p>
-      </div>
-    );
+    return ;
   }
 
   return (

@@ -7,13 +7,12 @@ export const useFetchFavoriteMovies = () => {
   const { query } = useSearch();
 
   useEffect(() => {
-    // Récupérer l'utilisateur courant
     const user = localStorage.getItem('currentUser');
     setCurrentUser(user);
   }, []);
 
   useEffect(() => {
-    // Charger les favoris en fonction de l'utilisateur et du filtre
+
     if (!currentUser) return;
 
     const storedFavorites = JSON.parse(localStorage.getItem(`favorites_${currentUser}`) || '[]');

@@ -8,7 +8,7 @@ const movieRepository = new MovieRepositoryTMDB();
 
 export const useFetchMovieById = (id: number) => {
   const router = useRouter();
-  const [isFavorite, setIsFavorite] = useState(false); // Ajout d'un état local pour isFavorite
+  const [isFavorite, setIsFavorite] = useState(false);
   const currentUser = localStorage.getItem("currentUser");
   const favoritesKey = `favorites_${currentUser}`;
 
@@ -19,7 +19,7 @@ export const useFetchMovieById = (id: number) => {
     },
   });
 
-  // Met à jour isFavorite quand le film ou les favoris changent
+
   useEffect(() => {
     if (!movie) return;
 
@@ -28,10 +28,10 @@ export const useFetchMovieById = (id: number) => {
     ) as Movie[];
 
     const favoriteStatus = storedFavorites.some((fav) => fav.id === id);
-    setIsFavorite(favoriteStatus); // Met à jour l'état
+    setIsFavorite(favoriteStatus); 
   }, [movie, favoritesKey, id]);
 
-  // Gérer l'ajout/suppression des favoris
+
   const toggleFavorite = () => {
     if (!currentUser) {
       console.error("Aucun utilisateur connecté.");

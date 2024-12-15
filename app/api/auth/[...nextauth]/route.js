@@ -4,16 +4,16 @@ import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { users } from "@/app/Repository/users";
 
-// Configuration des options d'authentification
+
 const authOptions = {
   providers: [
-    // Google OAuth Provider
+
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
 
-    // Credentials Provider (Nom d'utilisateur et mot de passe)
+
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -46,19 +46,18 @@ const authOptions = {
       if (account.provider === "google") {
         const email = profile.email;
 
-        // Vérifiez si l'utilisateur existe dans le tableau users
+
         const userExists = users.some((user) => user.username === email);
 
-        // Si l'utilisateur n'existe pas, ajoutez-le automatiquement
+
         if (!userExists) {
           users.push({
             username: email,
-            password: null, // Pas de mot de passe pour Google
+            password: null, 
           });
-          console.log(`Nouvel utilisateur ajouté via Google : ${email}`);
         }
       }
-      return true; // Autorise la connexion
+      return true; 
     },
     async jwt({ token, user }) {
       if (user) {
@@ -72,7 +71,7 @@ const authOptions = {
     },
     redirect: async ({ url, baseUrl }) => {
       console.log(url);
-      return baseUrl; // Redirige vers la page principale
+      return baseUrl;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,

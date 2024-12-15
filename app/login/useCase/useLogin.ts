@@ -16,7 +16,7 @@ export const useLogin = () => {
     const result = await signIn("credentials", {
       username: userName,
       password,
-      redirect: false, // Désactiver la redirection automatique
+      redirect: false, 
     });
 
     if (result?.error) {

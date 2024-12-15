@@ -10,7 +10,7 @@ export default function NowPlaying() {
   const { data, isLoading, error } = useFetchNowPlayingMovies(query);
 
   if (isLoading) return <Loading />;
-  if (error) return <div>Erreur lors de la récupération des films</div>;
+  if (error) return ;
 
   return (
     <div className="flex flex-col container mx-auto px-4 py-8 overflow-x-hidden">

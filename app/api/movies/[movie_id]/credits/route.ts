@@ -23,7 +23,7 @@ export async function GET(req: NextRequest, { params }: { params: { movie_id: st
     }
 
     const data = await response.json();
-    const cast: MovieCredits[] = data.cast; // Typage des données reçues en tant que `MovieCredits[]`
+    const cast: MovieCredits[] = data.cast; 
 
     return new Response(JSON.stringify(cast), { status: 200 });
   } catch (error) {

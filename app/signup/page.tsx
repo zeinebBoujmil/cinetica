@@ -6,13 +6,13 @@ export default function Signup() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [notification, setNotification] = useState({ message: "", type: "" }); // Gère les notifications
+  const [notification, setNotification] = useState({ message: "", type: "" }); 
   const router = useRouter();
 
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Vérifier que les mots de passe correspondent
+
     if (password !== confirmPassword) {
       showNotification("Les mots de passe ne correspondent pas.", "error");
       return;
@@ -31,17 +31,17 @@ export default function Signup() {
     if (data.success) {
       showNotification("Inscription réussie ! Redirection en cours...", "success");
       setTimeout(() => {
-        router.push("/login"); // Redirige vers la page de connexion
+        router.push("/login"); 
       }, 2000);
     } else {
-      showNotification(data.message, "error"); // Affiche une erreur si l'utilisateur existe déjà
+      showNotification(data.message, "error"); 
     }
   };
 
   const showNotification = (message: string, type: string) => {
     setNotification({ message, type });
     setTimeout(() => {
-      setNotification({ message: "", type: "" }); // Efface la notification après 3 secondes
+      setNotification({ message: "", type: "" }); 
     }, 3000);
   };
 
@@ -68,7 +68,7 @@ export default function Signup() {
   };
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gray-800">
-      {/* Image de fond */}
+
       <div className="absolute inset-0 z-0">
         <img
           src="/images/arrierePlan.jpg"
@@ -77,10 +77,10 @@ export default function Signup() {
         />
       </div>
 
-      {/* Notification */}
+
       <Notification />
 
-      {/* Formulaire d'inscription */}
+
       <div className="relative z-10 bg-white bg-opacity-90 p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
         <div className="flex justify-center mb-6">
           <img

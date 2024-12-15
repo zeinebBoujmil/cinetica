@@ -5,10 +5,10 @@ const tvShowRepository = new ShowRepositoryTMDB();
 
 export const useFetchPopularShows = (query: string) => {
   return useQuery({
-    queryKey: ["popularShows", query], // Inclure `query` dans la clé du cache
+    queryKey: ["popularShows", query], 
     queryFn: async () => {
       const shows = await tvShowRepository.getPopular();
-      // Filtrer les séries selon la recherche
+
       if (query) {
         return shows.filter((show) =>
           show.name.toLowerCase().includes(query.toLowerCase())

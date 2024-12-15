@@ -29,7 +29,6 @@ export class ShowRepositoryTMDB implements ShowRepository {
     return this.fetchShows('/tv/top_rated');
   }
 
-  // Nouvelle méthode pour récupérer des séries via l'endpoint "discover"
   async discoverShows(): Promise<TVShow[]> {
     return this.fetchShows('/discover/tv');
   }

@@ -7,13 +7,13 @@ export const useFetchFavoriteShows = () => {
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const { query } = useSearch();
 
-  // Récupérer l'utilisateur courant
+
   useEffect(() => {
     const user = localStorage.getItem('currentUser');
     setCurrentUser(user);
   }, []);
 
-  // Charger les séries favorites
+
   useEffect(() => {
     if (!currentUser) return;
 

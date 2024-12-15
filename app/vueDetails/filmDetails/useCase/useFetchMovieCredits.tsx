@@ -10,7 +10,7 @@ export const useFetchMovieCredits = (movieId: string) => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  // Fonction pour gérer le retour
+
   const handleBack = () => {
     router.back();
   };
@@ -46,6 +46,6 @@ export const useFetchMovieCredits = (movieId: string) => {
     credits,
     loading,
     error,
-    handleBack, // Inclure handleBack dans le retour
+    handleBack, 
   };
 };

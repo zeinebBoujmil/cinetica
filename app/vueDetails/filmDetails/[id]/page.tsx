@@ -1,24 +1,28 @@
-// components/MovieDetails.tsx
 'use client';
 
-import React from "react";
+import React, { useState } from "react";
 import { useFetchMovieCredits } from "../useCase/useFetchMovieCredits" ;
 import { formatDate } from "@/app/utils/dateFormatter";
 
 const MovieDetails = ({ params }: { params: { id: string } }) => {
   const { movie, credits, loading, error, handleBack } = useFetchMovieCredits(params.id);
+  const [visibleActors, setVisibleActors] = useState(8); 
+
+  const loadMoreActors = () => {
+    setVisibleActors((prev) => prev + 8); 
+  };
 
   if (loading) {
-    return <div className="text-center text-red-500">loading ...</div>;
+    return ;
   }
 
   if (error || !movie) {
-    return <div className="text-center text-red-500">{error || "Film introuvable."}</div>;
+    return ;
   }
 
   return (
     <div className="relative min-h-screen bg-gray-900 text-white">
-      {/* Arrière-plan flou */}
+
       <div
         className="absolute inset-0 bg-cover bg-center filter blur-md opacity-50"
         style={{
@@ -37,7 +41,7 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
       </button>
 
       <div className="relative z-10 flex flex-col lg:flex-row items-start p-8 lg:p-16">
-        {/* Image */}
+
         <div className="flex-shrink-0 w-full lg:w-1/3">
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -46,7 +50,7 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
           />
         </div>
 
-        {/* Informations */}
+
         <div className="mt-8 lg:mt-0 lg:ml-16 flex-1">
           <h1 className="text-4xl font-bold mb-4">{movie.title}</h1>
           <p className="text-sm text-gray-300 italic mb-4">{movie.original_title}</p>
@@ -67,11 +71,11 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
             </div>
           </div>
 
-          {/* Liste des acteurs */}
+
           <div className="mt-12">
             <h2 className="text-2xl font-bold mb-4">Acteurs</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {credits?.map((actor) => (
+              {credits?.slice(0, visibleActors).map((actor) => (
                 <div key={actor.id} className="flex flex-col items-center">
                   <img
                     src={
@@ -88,6 +92,17 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
                   </p>
                 </div>
               ))}
+
+              {credits && visibleActors < credits.length && (
+                <div className="col-span-full text-center mt-4">
+                  <button
+                    onClick={loadMoreActors}
+                    className="font-semibold py-2 px-4 rounded"
+                  >
+                    Charger plus
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -1,18 +1,18 @@
 'use client';
 
-import { useFetchTopRatedMovies } from "./useCase/useFetchTopRatedMovies"; // Import du hook
+import { useFetchTopRatedMovies } from "./useCase/useFetchTopRatedMovies"; 
 import Loading from "@/app/Loading";
 import MovieCard from "../../cards/filmCard/filmCard";
 import { useSearch } from "../../../contexts/searchContext";
 
 export default function TopRated() {
-  const { query } = useSearch(); // Utiliser la recherche
-  const { data, isLoading, error } = useFetchTopRatedMovies(); // Utiliser le hook
+  const { query } = useSearch(); 
+  const { data, isLoading, error } = useFetchTopRatedMovies(); 
 
   if (isLoading) return <Loading />;
   if (error) return <div>Erreur lors de la récupération des films</div>;
 
-  // Filtrer les films selon la recherche
+
   const filteredMovies = data?.filter((movie) =>
     movie.title.toLowerCase().includes(query.toLowerCase())
   );
