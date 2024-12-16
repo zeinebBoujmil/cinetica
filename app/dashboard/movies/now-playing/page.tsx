@@ -14,7 +14,7 @@ export default function NowPlaying() {
 
   return (
     <div className="flex flex-col container mx-auto px-4 py-8 overflow-x-hidden">
-      <h1 className="text-3xl font-extrabold mb-6 text-center relative">
+      <h1 className="text-3xl font-extrabold mb-6 text-center relative sticky top-0 bg-white dark:bg-black z-10">
       Now Playing Films
       <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
       </h1>

@@ -67,7 +67,7 @@ const MovieDetails = ({ params }: { params: { id: string } }) => {
             </div>
             <div>
               <h3 className="text-gray-400 text-sm">Popularité</h3>
-              <p>{movie.popularity.toFixed(1)} / 100</p>
+              <p>{movie.popularity.toFixed(1)}</p>
             </div>
           </div>
 

@@ -51,8 +51,8 @@ export const useFetchMovieById = (id: number) => {
 
     if (updatedFavorites) {
       localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites));
-      localStorage.setItem("favoritesUpdated", Date.now().toString()); // Clé temporaire pour notifier
-      setIsFavorite(!isFavorite); // Met à jour immédiatement l'état
+      localStorage.setItem("favoritesUpdated", Date.now().toString()); 
+      setIsFavorite(!isFavorite); 
     }
   };
 

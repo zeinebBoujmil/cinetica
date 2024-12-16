@@ -14,7 +14,7 @@ const FavoritesSeries = () => {
   return (
     <div className="min-h-screen py-8 px-6">
       <h1 className="text-3xl font-extrabold mb-6 text-center relative">
-        Vos Series Favorites
+        Your favorite Shows
         <span className="block h-1 w-24 bg-primary mx-auto mt-2 rounded-full"></span>
       </h1>
       {favoritesSeries.length > 0 ? (

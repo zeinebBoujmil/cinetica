@@ -1,5 +1,5 @@
 'use client'
-import { LogOut, Film } from "lucide-react";
+import { LogOut, Film, PlayCircle, TrendingUp, Star } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -17,46 +17,46 @@ const movies = [
   {
     title: "Now Playing",
     url: "/dashboard/movies/now-playing",
-    icon: Film,
+    icon: PlayCircle,
   },
   {
     title: "Popular",
     url: "/dashboard/movies/popular",
-    icon: Film,
+    icon: TrendingUp,
   },
   {
     title: "Top Rated",
     url: "/dashboard/movies/top-rated",
-    icon: Film,
+    icon: Star,
   },
 ];
 const tvShows = [
   {
     title: "On the air",
     url: "/dashboard/TVShows/on-the-air",
-    icon: Film,
+    icon: PlayCircle,
   },
   {
     title: "Popular",
     url: "/dashboard/TVShows/popular",
-    icon: Film,
+    icon: TrendingUp,
   },
   {
     title: "Top Rated",
     url: "/dashboard/TVShows/top-rated",
-    icon: Film,
+    icon: Star,
   },
 ];
 const favorites = [
   {
     title: "Favorite Movies",
     url: "/dashboard/Favorites/FavoriteMovies",
-    icon: Film,
+    icon: Star,
   },
   {
     title: "Favorite Shows",
     url: "/dashboard/Favorites/FavoriteShows",
-    icon: Film,
+    icon: Star,
   },
 ];
 
